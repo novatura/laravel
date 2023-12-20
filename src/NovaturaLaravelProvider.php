@@ -1,5 +1,7 @@
 <?php
 
+namespace Novatura\Laravel;
+
 use Illuminate\Support\ServiceProvider;
 
 class NovaturaLaravelProvider extends ServiceProvider
