@@ -1,0 +1,10 @@
+{
+    "name": "novatura/laravel",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "Novatura\\Laravel\\": "src/"
+        }
+    },
+    "require": {}
+}
