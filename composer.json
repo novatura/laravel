@@ -1,10 +1,29 @@
 {
     "name": "novatura/laravel",
     "type": "library",
+    "authors": [
+        {
+            "name": "Max Taylor",
+            "email": "max@novatura.co"
+        },
+        {
+            "name": "Thomas Mitchelmore",
+            "email": "tom@novatura.co"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Novatura\\Laravel\\": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "laravel/framework": "^10.38"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Novatura\\Laravel\\NovaturaLaravelProvider"
+            ]
+        }
+    }
 }
