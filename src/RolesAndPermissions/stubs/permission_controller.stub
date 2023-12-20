@@ -1,0 +1,26 @@
+<?php
+
+namespace {{ namespace }};
+
+use {{ permission_model_path }};
+
+class PermissionController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Role $role)
+    {
+
+    }
+
+}
