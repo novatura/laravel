@@ -16,11 +16,10 @@ The following steps are going to have you *create a fresh laravel project* and *
    - `laravel new sandbox && cd sandbox`
    - `composer require laravel/sail --dev`
    - `php artisan sail:install`
-2. Add this repository as a package by adding the following to `./composer.json`
+2. Add this repository as a package by adding the following to the end of your `./composer.json`
 
     ```json
     {
-        ...
         "repositories": [
             {
                 "type": "path",
@@ -30,9 +29,10 @@ The following steps are going to have you *create a fresh laravel project* and *
                 }
             }
         ]
-        ...
     }
     ```
+
+    This tells composer to check both the online repo and the local path for a package when you run composer install.
 
     > I'm sure you can get a relative path to work, I just haven't bothered. Absolute paths work fine. **Make sure you change {username} to your actual username.** (now is probably a good time to say I have only tested any of this on MacOS)
 
