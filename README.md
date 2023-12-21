@@ -3,8 +3,8 @@
 ## Repository Tracking
 
 - [ ] Frontend scaffolding (custom implementation of Breeze)
-- [ ] Roles and Permissions scaffolding
-- [ ] Model logging scaffolding
+- [x] Roles and Permissions scaffolding
+- [x] Model logging scaffolding
 - [ ] User History scaffolding
 - [ ] Error Central scaffolding
 - [ ] Repository Pattern scaffolding
