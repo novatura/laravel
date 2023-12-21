@@ -1,13 +1,16 @@
 <?php
 
+namespace Novatura\Laravel;
+
 use Illuminate\Support\ServiceProvider;
+use Novatura\Laravel\RolesAndPermissions\Commands\RolesAndPermissionCommand;
 
 class NovaturaLaravelProvider extends ServiceProvider
 {
     public function register()
     {
         $this->commands([
-
+            RolesAndPermissionCommand::class,
         ]);
     }
 
