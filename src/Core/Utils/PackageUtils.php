@@ -81,23 +81,24 @@ trait PackageUtils
      * - bun.lockb -> bun
      * - else, npm
      */
-    function installNodeModules()
+    function installNodeModules($mngr = 'npm')
     {
-        $manager = 'npm';
+        $detected = 'npm';
         $cmd = 'install';
 
         if (file_exists(base_path('package-lock.json'))) {
-            $manager = 'npm';
-            $cmd = 'ci';
+            $detected = 'npm';
         } elseif (file_exists(base_path('yarn.lock'))) {
-            $manager = 'yarn';
-            $cmd = 'install';
+            $detected = 'yarn';
         } elseif (file_exists(base_path('bun.lockb'))) {
-            $manager = 'bun';
-            $cmd = 'install';
+            $detected = 'bun';
         }
 
-        return (new Process([$manager, $cmd], base_path(), ['COMPOSER_MEMORY_LIMIT' => -1]))
+        if ($mngr !== $detected) {
+            $this->flushNodeModules();
+        }
+
+        return (new Process([$mngr, $cmd], base_path(), ['COMPOSER_MEMORY_LIMIT' => -1]))
             ->setTimeout(null)
             ->run(function ($type, $output) {
                 $this->output->write($output);

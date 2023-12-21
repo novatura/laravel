@@ -9,7 +9,9 @@ class InstallCommand extends Command
 {
     use PackageUtils;
 
-    protected $signature = 'novatura:scaffold:install {--auth}';
+    protected $signature = 'novatura:scaffold:install
+                            {--A|auth=false : Install auth scaffold?}
+                            {--U|use=yarn : Package manager to use (npm|yarn) }';
     protected $description = 'Install Novatura Frontend/Auth Scaffold';
     
     /**
@@ -65,7 +67,7 @@ class InstallCommand extends Command
                 'typescript' => '^5.3.3'
             ] + $packages;
         }, true);
-        $this->installNodeModules();
+        $this->installNodeModules($this->option('use'));
 
 
     }
