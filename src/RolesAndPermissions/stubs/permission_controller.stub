@@ -1,8 +1,9 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Controllers;
 
-use {{ permission_model_path }};
+use App\Models\Permission;
+
 
 class PermissionController extends Controller
 {
@@ -18,7 +19,7 @@ class PermissionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Role $role)
+    public function show(Permission $role)
     {
 
     }

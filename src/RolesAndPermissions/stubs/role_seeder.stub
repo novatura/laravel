@@ -1,12 +1,12 @@
 <?php
 
-namespace {{ namespace }};
+namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-use {{ role_model_path }};
-use {{ permission_model_path }};
+use App\Models\Role;
+use App\Models\Permission;
 
 use Illuminate\Database\QueryException;
 
@@ -84,6 +84,8 @@ class RoleSeeder extends Seeder
                     echo 'Permission Not Found: ' . $permName . "\n";
                     throw new \Exception("Permission Not Found: $permName");
                 }
+
+                echo 'Attaching: ' . $permName . "\n";
     
                 return $permission;
             } else {

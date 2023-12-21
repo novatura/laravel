@@ -1,8 +1,8 @@
 <?php
 
-namespace {{ namespace }};
+namespace App\Http\Controllers;
 
-use {{ role_model_path }};
+use App\Models\Role;
 
 class RoleController extends Controller
 {
