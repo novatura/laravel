@@ -36,6 +36,7 @@ class GenerateFile{
     {
         $path = $this->path;
         if (!$this->filesystem->exists($path)) {
+            $this->filesystem->makeDirectory(dirname($path), 0755, true, true);
             return $this->filesystem->put($path, $this->contents);
         }
         throw new \Exception('File already exists!');
