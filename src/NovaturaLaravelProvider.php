@@ -3,13 +3,14 @@
 namespace Novatura\Laravel;
 
 use Illuminate\Support\ServiceProvider;
+use Novatura\Laravel\Scaffold\Commands\InstallCommand;
 
 class NovaturaLaravelProvider extends ServiceProvider
 {
     public function register()
     {
         $this->commands([
-
+            InstallCommand::class,
         ]);
     }
 
