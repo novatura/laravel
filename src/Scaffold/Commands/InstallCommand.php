@@ -2,9 +2,10 @@
 
 namespace Novatura\Laravel\Scaffold\Commands;
 
-use FileUtils;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
+use Novatura\Laravel\Core\Utils\FileUtils;
 use Novatura\Laravel\Core\Utils\PackageUtils;
 
 class InstallCommand extends Command
@@ -85,7 +86,7 @@ class InstallCommand extends Command
         /**
          * Copy file structure from ../stubs to project
          */
-        (new Filesystem)->copyDirectory(__DIR__.'../stubs', base_path());
+        File::copyDirectory(__DIR__ . '/../stubs', base_path());
 
         /**
          * Fix home route 
@@ -97,10 +98,5 @@ class InstallCommand extends Command
          */
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
         $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
-
-        /**
-         * Install deps
-         */
-        $this->installNodeModules($this->option('use'));
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Novatura\Laravel\Core\Utils;
+
 use Illuminate\Support\Str;
 
 /**
