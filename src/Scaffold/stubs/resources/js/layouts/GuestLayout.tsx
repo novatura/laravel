@@ -1,7 +1,7 @@
 import { Box, Card, SimpleGrid, Text, Title } from "@mantine/core";
 import { ReactNode } from "react";
 
-function AuthLayout({ children }: AuthLayoutProps) {
+function GuestLayout({ children }: AuthLayoutProps) {
     return (
         <SimpleGrid
             cols={{
@@ -51,4 +51,4 @@ type AuthLayoutProps = {
     children?: ReactNode;
 }
 
-export default AuthLayout;
+export default GuestLayout;

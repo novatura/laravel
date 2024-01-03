@@ -1,4 +1,4 @@
-import AuthLayout from "@/layouts/AuthLayout";
+import GuestLayout from "@/layouts/GuestLayout";
 import { Link, useForm } from "@inertiajs/react";
 import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
 import { FormEventHandler } from "react";
@@ -21,7 +21,7 @@ function LoginPage() {
     };
 
     return (
-        <AuthLayout>
+        <GuestLayout>
             <Stack>
                 <Stack gap={0} ta="center">
                     <Title order={2}>Register</Title>
@@ -84,7 +84,7 @@ function LoginPage() {
                     </Link>
                 </Text>
             </Stack>
-        </AuthLayout>
+        </GuestLayout>
     );
 }
 
