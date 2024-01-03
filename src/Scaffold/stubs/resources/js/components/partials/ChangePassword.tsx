@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { Card, Title, Stack, TextInput, Button } from "@mantine/core";
 import { FormEvent } from "react";
+import { notifications } from "@mantine/notifications"
 
 function ChangePassword() {
 
@@ -13,7 +14,18 @@ function ChangePassword() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        put(route('password.update'));
+        put(route('password.update'), {
+            onSuccess: () => notifications.show({
+                title: 'Password Updated',
+                message: 'Your password has been updated successfully.',
+                color: 'green'
+            }),
+            onError: () => notifications.show({
+                title: 'Password Update Failed',
+                message: 'Your password could not be updated.',
+                color: 'red'
+            }),
+        });
     }
 
     return (

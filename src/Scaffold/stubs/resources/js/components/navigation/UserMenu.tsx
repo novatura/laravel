@@ -1,7 +1,8 @@
 import { PageProps } from "@/types/PageProps";
 import { Link, usePage } from "@inertiajs/react";
-import { Avatar, Button, Menu, UnstyledButton } from "@mantine/core";
+import { Avatar, Menu, UnstyledButton } from "@mantine/core";
 import { UserIcon, LogOutIcon } from "lucide-react"
+import { notifications } from "@mantine/notifications"
 
 function UserMenu() {
 
@@ -21,7 +22,12 @@ function UserMenu() {
                 <Link href={route("profile.edit")} style={{ textDecoration: "none" }}>
                     <Menu.Item leftSection={<UserIcon size={16} />}>Profile</Menu.Item>
                 </Link>
-                <Link href={route("logout")} method="post" style={{ textDecoration: "none" }}>
+                <Link
+                    href={route("logout")}
+                    method="post"
+                    style={{ textDecoration: "none" }}
+                    onSuccess={() => notifications.show({ title: "Signed out", message: "You have been signed out.", color: "green" })}
+                >
                     <Menu.Item leftSection={<LogOutIcon size={16} />}>Sign out</Menu.Item>
                 </Link>
             </Menu.Dropdown>

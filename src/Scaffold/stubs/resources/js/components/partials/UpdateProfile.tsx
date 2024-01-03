@@ -1,7 +1,8 @@
 import { PageProps } from "@/types/PageProps";
 import { useForm, usePage } from "@inertiajs/react";
-import { Card, Title, Text, Stack, TextInput, CardSection, Button, Group, Avatar } from "@mantine/core";
+import { Card, Title, Text, Stack, TextInput, Button, Group, Avatar } from "@mantine/core";
 import { FormEvent } from "react";
+import { notifications } from "@mantine/notifications"
 
 function UpdateProfile() {
 
@@ -15,7 +16,18 @@ function UpdateProfile() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        patch(route('profile.update'), {
+            onSuccess: () => notifications.show({
+                title: 'Profile Updated',
+                message: 'Your profile has been updated successfully.',
+                color: 'green'
+            }),
+            onError: () => notifications.show({
+                title: 'Profile Update Failed',
+                message: 'Your profile could not be updated.',
+                color: 'red'
+            }),
+        });
     }
 
     return (

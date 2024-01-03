@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/react";
 import { Card, Title, Text, Stack, TextInput, Button, Alert } from "@mantine/core";
 import { FormEvent } from "react";
+import { notifications } from "@mantine/notifications"
 
 function DeleteProfile() {
 
@@ -11,7 +12,18 @@ function DeleteProfile() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        Delete(route('profile.destroy'));
+        Delete(route('profile.destroy'), {
+            onSuccess: () => notifications.show({
+                title: 'Account Deleted',
+                message: 'Your account has been deleted successfully.',
+                color: 'green'
+            }),
+            onError: () => notifications.show({
+                title: 'Account Deletion Failed',
+                message: 'Your account could not be deleted.',
+                color: 'red'
+            }),
+        });
     }
 
     return (
