@@ -2,12 +2,15 @@
 
 namespace Novatura\Laravel\Scaffold\Commands;
 
+use FileUtils;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Novatura\Laravel\Core\Utils\PackageUtils;
 
 class InstallCommand extends Command
 {
     use PackageUtils;
+    use FileUtils;
 
     protected $signature = 'novatura:scaffold:install
                             {--U|use=yarn : Package manager to use (npm|yarn) }';
@@ -66,6 +69,38 @@ class InstallCommand extends Command
         }, true);
         $this->installNodeModules($this->option('use'));
 
+        /**
+         * Delete old files
+         */
+        if (file_exists(resource_path('js/app.js'))) {
+            unlink(resource_path('js/app.js'));
+        }
+        if (file_exists(resource_path('js/bootstrap.js'))) {
+            unlink(resource_path('js/bootstrap.js'));
+        }
+        if (file_exists(resource_path('views/welcome.blade.php'))) {
+            unlink(resource_path('views/welcome.blade.php'));
+        }
 
+        /**
+         * Copy file structure from ../stubs to project
+         */
+        (new Filesystem)->copyDirectory(__DIR__.'../stubs', base_path());
+
+        /**
+         * Fix home route 
+         */
+        $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
+
+        /**
+         * Install middleware
+         */
+        $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
+        $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
+
+        /**
+         * Install deps
+         */
+        $this->installNodeModules($this->option('use'));
     }
 }
