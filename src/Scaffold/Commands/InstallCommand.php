@@ -10,7 +10,6 @@ class InstallCommand extends Command
     use PackageUtils;
 
     protected $signature = 'novatura:scaffold:install
-                            {--A|auth=false : Install auth scaffold?}
                             {--U|use=yarn : Package manager to use (npm|yarn) }';
     protected $description = 'Install Novatura Frontend/Auth Scaffold';
     
@@ -22,9 +21,6 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->installFrontend();
-        if ($this->option('auth')) {
-            $this->installAuth();
-        }
     }
 
     protected function installFrontend()
@@ -37,6 +33,7 @@ class InstallCommand extends Command
         if (!$this->requireComposerPackages([
             'inertiajs/inertia-laravel:^0.6.3',
             'tightenco/ziggy:^1.0',
+            'laravel/sanctum:^3.2'
         ])) {
             echo "Composer packages installation failed.\n";
             throw new \Exception("Composer packages installation failed.");
@@ -70,19 +67,5 @@ class InstallCommand extends Command
         $this->installNodeModules($this->option('use'));
 
 
-    }
-
-    protected function installAuth()
-    {
-        echo "Installing auth scaffold...\n";
-
-        /**
-         * Composer packages
-         */
-        if (!$this->requireComposerPackages([
-            'laravel/sanctum:^3.2',
-        ])) {
-            throw new \Exception("Composer packages installation failed.");
-        }
     }
 }
