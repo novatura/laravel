@@ -49,15 +49,15 @@ class User extends Authenticatable
      * 
      * @var array<string>
      */
-    protected $appends = ['fullname'];
+    protected $appends = ['full_name'];
 
     
     /**
      * The method gets the fullname of the user.
      * 
-     * @return  fullname of the user
+     * @return  full_name of the user
      */
-    public function getFullnameAttribute()
+    public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }
