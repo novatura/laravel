@@ -3,7 +3,6 @@
 namespace Novatura\Laravel\Scaffold\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
 use Novatura\Laravel\Core\Utils\FileUtils;
 use Novatura\Laravel\Core\Utils\PackageUtils;
@@ -97,13 +96,24 @@ class InstallCommand extends Command
          * Patch files
          */
         $this->info("Updating required Laravel files...");
+        
+        // Update home url
         $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
+
+        // Change vite entrypoint to app.tsx
         $this->replaceInFile('resources/js/app.js', 'resources/js/app.tsx', base_path('vite.config.js'));
+
+        // Modify original migration
+        $this->replaceInFile('$table->id();', '$table->uuid(\'id\')->primary();', database_path('migrations/2014_10_12_000000_create_users_table.php'));
+
+        // Add inertia middleware
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
         $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
 
         $this->line("");
         $this->info("Frontend scaffold installed.");
-        $this->info("Make sure you migrate your database.");
+        
+        $this->line("");
+        $this->info("Make sure you migrate your database fresh");
     }
 }
