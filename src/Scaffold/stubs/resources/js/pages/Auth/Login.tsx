@@ -1,6 +1,7 @@
 import GuestLayout from "@/layouts/GuestLayout";
 import { Link, useForm } from "@inertiajs/react";
 import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
+import { FormEventHandler } from "react";
 
 function LoginPage() {
 
@@ -9,6 +10,12 @@ function LoginPage() {
         password: '',
     })
 
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+
+        post(route('login'));
+    };
+
     return (
         <GuestLayout>
             <Stack>
@@ -16,7 +23,7 @@ function LoginPage() {
                     <Title order={2}>Login</Title>
                     <Text c="dimmed">Sign in to your account</Text>
                 </Stack>
-                <form>
+                <form onSubmit={submit}>
                     <Stack gap="xs" miw="300px">
                         <TextInput
                             label="Email"
