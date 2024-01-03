@@ -21,7 +21,7 @@ class MakeFile {
      * @param  array $variables
      * @return void
      */
-    public function __construct(Command $command, array $paths_and_stubs = [])
+    public function __construct(Command $command, array $paths_and_stubs = [], )
     {
         $this->command = $command;
         $this->paths_and_stubs = $paths_and_stubs;
@@ -35,8 +35,9 @@ class MakeFile {
             try {
                 $path = $generateFile['path'];
                 $stub = $generateFile['stub'];
+                $variables = $generateFile['variables'] ?? [];
 
-                $content = (new GenerateStub("{$this->baseStubPath}{$stub}"))->generate();
+                $content = (new GenerateStub("{$this->baseStubPath}{$stub}", $variables))->generate();
                 (new GenerateFile($path, $content))->generate();
     
                 $this->command->info("Created: {$path}");
