@@ -93,14 +93,11 @@ class InstallCommand extends Command
         File::copyDirectory(__DIR__ . '/../stubs', base_path());
 
         /**
-         * Fix home route 
+         * Patch files
          */
         $this->info("Updating required Laravel files...");
         $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
-
-        /**
-         * Install middleware
-         */
+        $this->replaceInFile('resources/js/app.js', 'resources/js/app.tsx', base_path('vite.config.js'));
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
         $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
 
