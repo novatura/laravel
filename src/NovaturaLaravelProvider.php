@@ -10,6 +10,8 @@ use Novatura\Laravel\RolesAndPermissions\Commands\AddSeeder as RolesAndPermissio
 use Novatura\Laravel\RolesAndPermissions\Commands\AddController as RolesAndPermissionAddControllerCommand;
 
 use Novatura\Laravel\ModelLogging\Commands\Install as ModelLoggingInstallCommand;
+use Novatura\Laravel\Repository\Commands\Initiate as RepositoryInitiateCommand;
+use Novatura\Laravel\Repository\Commands\Make as RepositoryMakeCommand;
 
 
 class NovaturaLaravelProvider extends ServiceProvider
@@ -22,6 +24,8 @@ class NovaturaLaravelProvider extends ServiceProvider
             RolesAndPermissionAddSeederCommand::class,
             RolesAndPermissionAddControllerCommand::class,
             ModelLoggingInstallCommand::class,
+            RepositoryInitiateCommand::class,
+            RepositoryMakeCommand::class,
         ]);
     }
 
