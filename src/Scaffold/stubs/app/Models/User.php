@@ -46,21 +46,21 @@ class User extends Authenticatable
 
     /**
      * The attributes should be appended to the model
-     * 
+     *
      * @var array<string>
      */
     protected $appends = ['full_name'];
 
-    
+
     /**
-     * The method gets the fullname of the user.
-     * 
-     * @return  full_name of the user
+     * The method gets the full name of the user.
+     *
+     * @return string full name of the user
      */
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
     }
-    
+
 
 }
