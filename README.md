@@ -6,6 +6,24 @@
 - [ ] Repository pattern scaffolding
 - [ ] User permissions scaffolding
 
+## Usage
+
+### Installation
+
+```bash
+composer require novatura/laravel
+```
+
+### Commands
+
+#### Scaffold
+
+Install basic login/register functionality with Mantine UI.
+
+```bash
+php artisan novatura:scaffold:install
+```
+
 ## Local Development
 
 Local development is a bit tricky, because we need to mount this repository into the docker container of a sandbox/testing project.
