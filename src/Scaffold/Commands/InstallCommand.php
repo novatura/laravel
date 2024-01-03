@@ -29,11 +29,12 @@ class InstallCommand extends Command
 
     protected function installFrontend()
     {
-        echo "Installing frontend scaffold...\n";
+        $this->info("Installing frontend scaffold...");
 
         /**
          * Composer packages
          */
+        $this->info("Installing composer packages...");
         if (!$this->requireComposerPackages([
             'inertiajs/inertia-laravel:^0.6.3',
             'tightenco/ziggy:^1.0',
@@ -46,6 +47,7 @@ class InstallCommand extends Command
         /**
          * NPM Packages
          */
+        $this->info("Installing npm packages...");
         $this->updateNodePackages(function ($packages) {
             return [
                 '@inertiajs/react' => '^1.0.14',
@@ -73,6 +75,7 @@ class InstallCommand extends Command
         /**
          * Delete old files
          */
+        $this->info("Deleting old files...");
         if (file_exists(resource_path('js/app.js'))) {
             unlink(resource_path('js/app.js'));
         }
@@ -86,11 +89,13 @@ class InstallCommand extends Command
         /**
          * Copy file structure from ../stubs to project
          */
+        $this->info("Copying new files...");
         File::copyDirectory(__DIR__ . '/../stubs', base_path());
 
         /**
          * Fix home route 
          */
+        $this->info("Updating required Laravel files...");
         $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
 
         /**
@@ -98,5 +103,9 @@ class InstallCommand extends Command
          */
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
         $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
+
+        $this->line("");
+        $this->info("Frontend scaffold installed.");
+        $this->info("Make sure you migrate your database.");
     }
 }
