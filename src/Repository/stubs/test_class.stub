@@ -1,0 +1,15 @@
+<?php
+
+namespace Tests\Unit\Repositories;
+
+use {{ model_path }};
+use App\Repositories\{{ repository_name }};
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class {{ test_class_name }} extends TestCase
+{
+
+{{ methods }}
+
+}    
