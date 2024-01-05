@@ -21,6 +21,9 @@ function Email()  {
             <Stack>
                 <Stack gap={0} ta="center">
                     <Title order={2}>Change Email</Title>
+                    <Text maw={384}>
+                        Enter your new email.
+                    </Text>
                 </Stack>
                 <form onSubmit={submit}>
                     <Stack justify="center" miw="300px">

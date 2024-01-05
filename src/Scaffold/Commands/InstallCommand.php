@@ -111,6 +111,9 @@ class InstallCommand extends Command
 
         // Change password timeout
         $this->replaceInFile('\'password_timeout\' => 10800', '\'password_timeout\' => 300', config_path('auth.php'));
+        
+        // Update verified middleware
+        $this->replaceInFile('\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class', '\App\Http\Middleware\VerifiedEmail::class', app_path('Http/Kernel.php'));
 
         // Add inertia middleware
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');

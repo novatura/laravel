@@ -1,21 +1,15 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
-=======
 use App\Http\Controllers\Auth\NewPasswordController;
->>>>>>> Stashed changes
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Auth\TwoFactorController;
-=======
 use App\Http\Controllers\Auth\NewEmailController;
 use App\Http\Controllers\Auth\RequestVerificationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
->>>>>>> Stashed changes
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -25,12 +19,11 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name("login");
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-<<<<<<< Updated upstream
     Route::get('two-factor/verify', [TwoFactorController::class, 'verify'])->name('two-factor.verify');
     Route::get('two-factor/recover', [TwoFactorController::class, 'recover'])->name('two-factor.recover');
     Route::post('two-factor/verify', [TwoFactorController::class, 'verify_store'])->name('two-factor.verify_store');
     Route::post('two-factor/recover', [TwoFactorController::class, 'recover_store'])->name('two-factor.recover_store');
-=======
+    
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
     ->name('password.request');
 
@@ -43,7 +36,6 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
 
->>>>>>> Stashed changes
 });
 
 Route::middleware('auth')->group(function () {

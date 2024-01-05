@@ -13,7 +13,7 @@ function LoginPage() {
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route('verify.email.send'));
     };
 
     return (
@@ -21,6 +21,9 @@ function LoginPage() {
             <Stack>
                 <Stack gap={0} ta="center">
                     <Title order={2}>Verify Email Address</Title>
+                    <Text maw={384}>
+                        Press send to start the verification process.
+                    </Text>
                 </Stack>
                 <form onSubmit={submit}>
                     <Stack gap="xs" miw="300px">
