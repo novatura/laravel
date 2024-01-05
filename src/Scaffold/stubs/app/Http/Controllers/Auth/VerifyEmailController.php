@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Inertia\Response;
 
 class VerifyEmailController extends Controller
 {
 
 
-    public function index(): Response
+    public function index(Request $request)
     {
-        return Inertia::render('Auth/EmailVerification/Enter');
+        if (!$request->has('c')) {
+            return Inertia::render('Auth/EmailVerification/Enter');
+        } else {
+            return request()->user()->verify($request->query('c'));
+        }
     }
 
     public function verify(Request $request)
