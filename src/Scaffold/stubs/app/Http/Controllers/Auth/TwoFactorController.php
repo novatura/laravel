@@ -59,17 +59,12 @@ class TwoFactorController extends Controller
 
     public function destroy(Request $request)
     {
-
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
         $user = User::find($request->user()->id);
         $user->two_factor_secret = null;
         $user->two_factor_recovery_codes = null;
         $user->save();
 
-        return redirect()->route("profile.edit");
+        return redirect()->back();
     }
 
     public function verify(Request $request)

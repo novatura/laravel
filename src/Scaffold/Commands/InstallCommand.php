@@ -109,6 +109,9 @@ class InstallCommand extends Command
         // Modify original migration
         $this->replaceInFile('$table->id();', '$table->uuid(\'id\')->primary();', database_path('migrations/2014_10_12_000000_create_users_table.php'));
 
+        // Change password timeout
+        $this->replaceInFile('\'password_timeout\' => 10800', '\'password_timeout\' => 300', config_path('auth.php'));
+        
         // Update verified middleware
         $this->replaceInFile('\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class', '\App\Http\Middleware\VerifiedEmail::class', app_path('Http/Kernel.php'));
 
