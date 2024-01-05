@@ -19,6 +19,8 @@ The following steps are going to have you *create a fresh laravel project* and *
    - `laravel new sandbox && cd sandbox`
    - `composer require laravel/sail --dev`
    - `php artisan sail:install`
+      - When prompted, select `mysql`, `redis` and `mailpit`
+
 2. Add this repository as a package by adding the following to the end of your `./composer.json`
 
     ```json
@@ -60,6 +62,18 @@ The following steps are going to have you *create a fresh laravel project* and *
         - '/Users/{username}/code/novatura/laravel:/var/www/html/vendor/novatura/laravel'
     ```
 
+    If you forgot to include Mailpit when setting up sail, add it as a service to `docker-compose.json`:
+
+    ```yaml
+    mailpit:
+        image: 'axllent/mailpit:latest'
+        ports:
+            - '${FORWARD_MAILPIT_PORT:-1025}:1025'
+            - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - sail
+     ```
+
 6. Start sail: `./vendor/bin/sail up`
 7. Make a git commit in your sandbox project
     - This is so that you can constantly roll back to the clean slate 😉
@@ -73,3 +87,6 @@ For example:
 ```bash
 composer require novatura/laravel @dev && php artisan novatura:scaffold:install
 ```
+
+With Sail running, you can access all outbound emails by going to `http://localhost:8025` in your browser (Mailpit dashboard).
+
