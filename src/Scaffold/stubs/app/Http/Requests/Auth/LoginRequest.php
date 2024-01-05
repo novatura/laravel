@@ -45,7 +45,7 @@ class LoginRequest extends FormRequest
 
         $user = User::where('email', $this->email)->first();
 
-        if (!Hash::check($this->password, $user->password)) {
+        if (!isset($user) || !Hash::check($this->password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
