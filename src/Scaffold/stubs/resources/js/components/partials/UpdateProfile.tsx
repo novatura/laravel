@@ -3,6 +3,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import { Card, Title, Text, Stack, TextInput, Button, Group, Avatar } from "@mantine/core";
 import { FormEvent } from "react";
 import { notifications } from "@mantine/notifications"
+import Gravatar from "@/components/Gravatar";
 
 function UpdateProfile() {
 
@@ -38,9 +39,9 @@ function UpdateProfile() {
                         <Title order={2}>Profile</Title>
                         <Text>Update your profile</Text>
                     </Stack>
-                    <Avatar color="blue" size="lg">
+                    <Gravatar email={user.email} color="blue" size="lg">
                         {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
-                    </Avatar>
+                    </Gravatar>
                 </Group>
                 <form onSubmit={handleSubmit}>
                     <Stack maw={512}>

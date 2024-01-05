@@ -1,8 +1,9 @@
 import { PageProps } from "@/types/PageProps";
 import { Link, usePage } from "@inertiajs/react";
-import { Avatar, Menu, UnstyledButton } from "@mantine/core";
-import { UserIcon, LogOutIcon } from "lucide-react"
+import { Avatar, Indicator, Menu, UnstyledButton } from "@mantine/core";
+import { UserIcon, LogOutIcon, MailWarningIcon } from "lucide-react"
 import { notifications } from "@mantine/notifications"
+import Gravatar from "@/components/Gravatar";
 
 function UserMenu() {
 
@@ -12,9 +13,11 @@ function UserMenu() {
         <Menu shadow="md" width={200}>
             <Menu.Target>
                 <UnstyledButton>
-                    <Avatar color="blue">
-                        {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
-                    </Avatar>
+                    <Indicator disabled={!!user.email_verified_at}>
+                        <Gravatar color="blue" radius="sm" email={user.email}>
+                            {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
+                        </Gravatar>
+                    </Indicator>
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
@@ -30,6 +33,18 @@ function UserMenu() {
                 >
                     <Menu.Item leftSection={<LogOutIcon size={16} />}>Sign out</Menu.Item>
                 </Link>
+                {!user.email_verified_at && (<>
+                    <Menu.Divider />
+                    <Link
+                        href={route("verify.email.send")}
+                        style={{ textDecoration: "none" }}
+                        method="post"
+                    >
+                        <Indicator position="middle-start">
+                            <Menu.Item leftSection={<MailWarningIcon size={16} />}>Verify Email</Menu.Item>
+                        </Indicator>
+                    </Link>
+                </>)}
             </Menu.Dropdown>
         </Menu>
     );

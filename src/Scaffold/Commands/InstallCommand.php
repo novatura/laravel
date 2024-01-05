@@ -59,6 +59,7 @@ class InstallCommand extends Command
                 '@mantine/nprogress' => '^7.3.2',
                 '@mantine/notifications' => '^7.4.0',
                 'lucide-react' => '^0.3.0',
+                'md5' => '^2.3.0'
             ] + $packages;
         }, false);
         $this->updateNodePackages(function ($packages) {
@@ -70,6 +71,7 @@ class InstallCommand extends Command
                 '@types/node' => '^20.10.5',
                 '@types/react' => '^18.2.45',
                 '@types/react-dom' => '^18.2.18',
+                '@types/md5' => '^2.3.5',
                 'typescript' => '^5.3.3'
             ] + $packages;
         }, true);
