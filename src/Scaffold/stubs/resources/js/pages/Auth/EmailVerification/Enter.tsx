@@ -32,7 +32,10 @@ function Enter()  {
         <GuestLayout>
             <Stack>
                 <Stack gap={0} ta="center">
-                    <Title order={2}>Change Email</Title>
+                    <Title order={2}>Email Verification Code</Title>
+                    <Text maw={384}>
+                        Please enter the verification code send to your email.
+                    </Text>
                 </Stack>
                 <form onSubmit={submit}>
                     <Stack justify="center">

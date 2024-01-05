@@ -109,6 +109,9 @@ class InstallCommand extends Command
         // Modify original migration
         $this->replaceInFile('$table->id();', '$table->uuid(\'id\')->primary();', database_path('migrations/2014_10_12_000000_create_users_table.php'));
 
+        // Update verified middleware
+        $this->replaceInFile('\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class', '\App\Http\Middleware\VerifiedEmail::class', app_path('Http/Kernel.php'));
+
         // Add inertia middleware
         $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
         $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
