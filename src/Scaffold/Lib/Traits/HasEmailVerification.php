@@ -64,7 +64,7 @@ trait HasEmailVerification
         } else {
             $verification->delete();
     
-            return redirect('/');
+            return redirect()->route("profile.edit");
         }
 
 
