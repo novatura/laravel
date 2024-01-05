@@ -40,7 +40,7 @@ class VerifyEmail extends Notification
         return (new MailMessage)
                     ->line('You are receiving this email because you need to verify this email address.')
                     ->line('Code: ' . $this->code)
-                    ->action('Verify Email Address', route('verify.email.code'))
+                    ->action('Verify Email Address', route('verify.email.code') . "?c=" . $this->code)
                     ->line('Thank you for using our application!');
     }
 

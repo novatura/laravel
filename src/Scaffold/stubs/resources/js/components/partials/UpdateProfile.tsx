@@ -60,6 +60,12 @@ function UpdateProfile() {
                             required
                             autoComplete="family-name"
                         />
+                        <TextInput
+                            label="Email"
+                            value={user.email}
+                            readOnly
+                            disabled
+                        />
                     </Stack>
                     <Button mt="lg" type="submit" loading={processing}>
                         Update
