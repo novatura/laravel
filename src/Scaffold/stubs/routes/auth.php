@@ -66,14 +66,13 @@ Route::middleware('auth')->group(function () {
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])->name('password.confirm.store');
 
-    Route::get('two-factor/create', [TwoFactorController::class, 'setup'])->name('two-factor.create');
-    Route::post('two-factor/store', [TwoFactorController::class, 'store'])->name('two-factor.store');
-    Route::delete('two-factor/destroy', [TwoFactorController::class, 'destroy'])->name('two-factor.destroy');
-
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
 
 Route::middleware(['auth', 'password.confirm'])->group(function () {
+    Route::get('two-factor/create', [TwoFactorController::class, 'setup'])->name('two-factor.create');
+    Route::post('two-factor/store', [TwoFactorController::class, 'store'])->name('two-factor.store');
+    Route::delete('two-factor/destroy', [TwoFactorController::class, 'destroy'])->name('two-factor.destroy');
     Route::get('two-factor/recovery-codes', [TwoFactorController::class, 'recovery_codes'])->name('two-factor.recovery_codes');
     Route::get('two-factor/recovery-codes/download', [TwoFactorController::class, 'download_recovery_codes'])->name('two-factor.recovery_codes.download');
 });
