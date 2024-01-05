@@ -39,7 +39,7 @@ function UpdateProfile() {
                         <Text>Update your profile</Text>
                     </Stack>
                     <Avatar color="blue" size="lg">
-                        {user.full_name.split(" ").map(t => t[0]).join("")}
+                        {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
                     </Avatar>
                 </Group>
                 <form onSubmit={handleSubmit}>

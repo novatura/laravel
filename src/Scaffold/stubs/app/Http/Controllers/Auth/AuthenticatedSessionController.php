@@ -8,6 +8,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -30,11 +31,23 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $user = $request->authenticate();
 
-        $request->session()->regenerate();
+        if (!$user->two_factor_enabled) {
+            Auth::login($user, $request->boolean('remember'));
+            RateLimiter::clear($request->throttleKey());
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+            $request->session()->regenerate();
+
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        $request->session()->put('two-factor:auth', [
+            'user_id' => $user->id,
+            'remember' => $request->boolean('remember')
+        ]);
+
+        return redirect()->route('two-factor.verify');
     }
 
     /**

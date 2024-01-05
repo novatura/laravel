@@ -37,7 +37,9 @@ class InstallCommand extends Command
         if (!$this->requireComposerPackages([
             'inertiajs/inertia-laravel:^0.6.3',
             'tightenco/ziggy:^1.0',
-            'laravel/sanctum:^3.2'
+            'laravel/sanctum:^3.2',
+            'simplesoftwareio/simple-qrcode:^4.2',
+            'spomky-labs/otphp:^11.2'
         ])) {
             echo "Composer packages installation failed.\n";
             throw new \Exception("Composer packages installation failed.");

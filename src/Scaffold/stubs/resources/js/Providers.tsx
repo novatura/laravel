@@ -29,6 +29,7 @@ function Providers({ children }: ProvidersProps) {
         }
     })
 
+
     return (
         <MantineProvider theme={Theme}>
             <NavigationProgress />

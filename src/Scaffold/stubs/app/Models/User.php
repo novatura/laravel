@@ -33,6 +33,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'two_factor_secret',
+        'two_factor_recovery_codes',
     ];
 
     /**
@@ -43,6 +45,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        // 'two_factor_recovery_codes' => 'array',
     ];
 
     /**
@@ -50,7 +53,7 @@ class User extends Authenticatable
      *
      * @var array<string>
      */
-    protected $appends = ['full_name'];
+    protected $appends = ['full_name', 'two_factor_enabled'];
 
 
     /**
@@ -61,6 +64,16 @@ class User extends Authenticatable
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * The method gets the two factor enabled status of the user.
+     *
+     * @return bool two factor enabled status of the user
+     */
+    public function getTwoFactorEnabledAttribute()
+    {
+        return !is_null($this->two_factor_secret);
     }
 
 

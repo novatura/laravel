@@ -13,7 +13,7 @@ function UserMenu() {
             <Menu.Target>
                 <UnstyledButton>
                     <Avatar color="blue">
-                        {user.full_name.split(" ").map(t => t[0]).join("")}
+                        {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
                     </Avatar>
                 </UnstyledButton>
             </Menu.Target>
