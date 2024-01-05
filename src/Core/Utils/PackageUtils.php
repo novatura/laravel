@@ -26,9 +26,7 @@ trait PackageUtils
 
         return (new Process($command, base_path(), ['COMPOSER_MEMORY_LIMIT' => -1]))
             ->setTimeout(null)
-            ->run(function ($type, $output) {
-                $this->output->write($output);
-            }) === 0;
+            ->run() === 0;
     }
 
     /**
@@ -100,8 +98,6 @@ trait PackageUtils
 
         return (new Process([$mngr, $cmd], base_path(), ['COMPOSER_MEMORY_LIMIT' => -1]))
             ->setTimeout(null)
-            ->run(function ($type, $output) {
-                $this->output->write($output);
-            }) === 0;
+            ->run() === 0;
     }
 }
