@@ -1,28 +1,29 @@
 import GuestLayout from "@/layouts/GuestLayout";
 import { Link, useForm } from "@inertiajs/react";
-import { Button, Checkbox, Stack, Text, TextInput, Title, Group } from "@mantine/core";
+import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
 import { FormEventHandler } from "react";
 
-function LoginPage() {
+function ResetPasswordPage({ token, email }: { token: string, email: string })  {
 
     const { post, data, setData, processing, errors } = useForm({
-        email: '',
+        token: token,
+        email: email,
         password: '',
-        remember: false,
+        password_confirmation: '',
     })
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('login'));
+        post(route('password.store'));
     };
 
     return (
         <GuestLayout>
             <Stack>
                 <Stack gap={0} ta="center">
-                    <Title order={2}>Login</Title>
-                    <Text c="dimmed">Sign in to your account</Text>
+                    <Title order={2}>Reset Password</Title>
+                    <Text c="dimmed">Please enter the required information.</Text>
                 </Stack>
                 <form onSubmit={submit}>
                     <Stack gap="xs" miw="300px">
@@ -32,33 +33,31 @@ function LoginPage() {
                             onChange={(event) => setData('email', event.currentTarget.value)}
                             error={errors.email}
                             required
-                            autoFocus
                         />
-                        <Stack gap={0}>
-                            <TextInput
-                                label="Password"
-                                type="password"
-                                value={data.password}
-                                onChange={(event) => setData('password', event.currentTarget.value)}
-                                error={errors.password}
-                                required
-                            />
-                            <Text fz="xs">
-                                <Link href={route('password.request')}>Forgot your password?</Link>
-                            </Text>
-                        </Stack>
-                        <Checkbox
-                            label="Remember me?"
-                            checked={data.remember}
-                            onChange={(event) => setData('remember', event.currentTarget.checked)}
-                            mt="md"
+                        <TextInput
+                            label="Password"
+                            type="password"
+                            value={data.password}
+                            autoComplete="new-password"
+                            onChange={(event) => setData('password', event.currentTarget.value)}
+                            error={errors.password}
+                            required
+                        />
+                        <TextInput
+                            label="Confirm Password"
+                            type="password"
+                            value={data.password_confirmation}
+                            autoComplete="new-password"
+                            onChange={(event) => setData('password_confirmation', event.currentTarget.value)}
+                            error={errors.password}
+                            required
                         />
                         <Button
                             type="submit"
                             loading={processing}
                             mt="md"
                         >
-                            Login
+                            Reset
                         </Button>
                     </Stack>
                 </form>
@@ -73,4 +72,4 @@ function LoginPage() {
     );
 }
 
-export default LoginPage;
+export default ResetPasswordPage;
