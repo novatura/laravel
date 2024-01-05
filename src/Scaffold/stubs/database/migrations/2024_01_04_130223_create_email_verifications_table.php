@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code');
             $table->string('email');
-            $table->foreignUuid('user_id')->references('id')->on('users');
+            $table->foreignUuid('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
