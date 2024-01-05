@@ -35,6 +35,7 @@ function LoginPage() {
                             onChange={(event) => setData('first_name', event.currentTarget.value)}
                             error={errors.first_name}
                             required
+                            autoFocus
                         />
                         <TextInput
                             label="Last Name"

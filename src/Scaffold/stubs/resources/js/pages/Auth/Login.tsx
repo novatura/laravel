@@ -1,6 +1,6 @@
 import GuestLayout from "@/layouts/GuestLayout";
 import { Link, useForm } from "@inertiajs/react";
-import { Button, Stack, Text, TextInput, Title } from "@mantine/core";
+import { Button, Checkbox, Stack, Text, TextInput, Title, Group } from "@mantine/core";
 import { FormEventHandler } from "react";
 
 function LoginPage() {
@@ -8,6 +8,7 @@ function LoginPage() {
     const { post, data, setData, processing, errors } = useForm({
         email: '',
         password: '',
+        remember: false,
     })
 
     const submit: FormEventHandler = (e) => {
@@ -31,6 +32,7 @@ function LoginPage() {
                             onChange={(event) => setData('email', event.currentTarget.value)}
                             error={errors.email}
                             required
+                            autoFocus
                         />
                         <Stack gap={0}>
                             <TextInput
@@ -45,6 +47,12 @@ function LoginPage() {
                                 <Link href={""}>Forgot your password?</Link>
                             </Text>
                         </Stack>
+                        <Checkbox
+                            label="Remember me?"
+                            checked={data.remember}
+                            onChange={(event) => setData('remember', event.currentTarget.checked)}
+                            mt="md"
+                        />
                         <Button
                             type="submit"
                             loading={processing}
