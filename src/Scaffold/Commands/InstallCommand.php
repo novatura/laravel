@@ -3,14 +3,16 @@
 namespace Novatura\Laravel\Scaffold\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
+use Novatura\Laravel\Core\Utils\FileUtils;
 use Novatura\Laravel\Core\Utils\PackageUtils;
 
 class InstallCommand extends Command
 {
     use PackageUtils;
+    use FileUtils;
 
     protected $signature = 'novatura:scaffold:install
-                            {--A|auth=false : Install auth scaffold?}
                             {--U|use=yarn : Package manager to use (npm|yarn) }';
     protected $description = 'Install Novatura Frontend/Auth Scaffold';
     
@@ -22,21 +24,22 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->installFrontend();
-        if ($this->option('auth')) {
-            $this->installAuth();
-        }
     }
 
     protected function installFrontend()
     {
-        echo "Installing frontend scaffold...\n";
+        $this->info("Installing frontend scaffold...");
 
         /**
          * Composer packages
          */
+        $this->info("Installing composer packages...");
         if (!$this->requireComposerPackages([
             'inertiajs/inertia-laravel:^0.6.3',
             'tightenco/ziggy:^1.0',
+            'laravel/sanctum:^3.2',
+            'simplesoftwareio/simple-qrcode:^4.2',
+            'spomky-labs/otphp:^11.2'
         ])) {
             echo "Composer packages installation failed.\n";
             throw new \Exception("Composer packages installation failed.");
@@ -45,6 +48,7 @@ class InstallCommand extends Command
         /**
          * NPM Packages
          */
+        $this->info("Installing npm packages...");
         $this->updateNodePackages(function ($packages) {
             return [
                 '@inertiajs/react' => '^1.0.14',
@@ -53,6 +57,8 @@ class InstallCommand extends Command
                 '@mantine/core' => '^7.3.2',
                 '@mantine/hooks' => '^7.3.2',
                 '@mantine/nprogress' => '^7.3.2',
+                '@mantine/notifications' => '^7.4.0',
+                'lucide-react' => '^0.307.0',
             ] + $packages;
         }, false);
         $this->updateNodePackages(function ($packages) {
@@ -69,20 +75,54 @@ class InstallCommand extends Command
         }, true);
         $this->installNodeModules($this->option('use'));
 
-
-    }
-
-    protected function installAuth()
-    {
-        echo "Installing auth scaffold...\n";
+        /**
+         * Delete old files
+         */
+        $this->info("Deleting old files...");
+        if (file_exists(resource_path('js/app.js'))) {
+            unlink(resource_path('js/app.js'));
+        }
+        if (file_exists(resource_path('js/bootstrap.js'))) {
+            unlink(resource_path('js/bootstrap.js'));
+        }
+        if (file_exists(resource_path('views/welcome.blade.php'))) {
+            unlink(resource_path('views/welcome.blade.php'));
+        }
 
         /**
-         * Composer packages
+         * Copy file structure from ../stubs to project
          */
-        if (!$this->requireComposerPackages([
-            'laravel/sanctum:^3.2',
-        ])) {
-            throw new \Exception("Composer packages installation failed.");
-        }
+        $this->info("Copying new files...");
+        File::copyDirectory(__DIR__ . '/../stubs', base_path());
+
+        /**
+         * Patch files
+         */
+        $this->info("Updating required Laravel files...");
+        
+        // Update home url
+        $this->replaceInFile('/home', '/dashboard', app_path('Providers/RouteServiceProvider.php'));
+
+        // Change vite entrypoint to app.tsx
+        $this->replaceInFile('resources/js/app.js', 'resources/js/app.tsx', base_path('vite.config.js'));
+
+        // Modify original migration
+        $this->replaceInFile('$table->id();', '$table->uuid(\'id\')->primary();', database_path('migrations/2014_10_12_000000_create_users_table.php'));
+
+        // Change password timeout
+        $this->replaceInFile('\'password_timeout\' => 10800', '\'password_timeout\' => 300', config_path('auth.php'));
+        
+        // Update verified middleware
+        $this->replaceInFile('\Illuminate\Auth\Middleware\EnsureEmailIsVerified::class', '\App\Http\Middleware\VerifiedEmail::class', app_path('Http/Kernel.php'));
+
+        // Add inertia middleware
+        $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\HandleInertiaRequests::class');
+        $this->installMiddlewareAfter('\App\Http\Middleware\HandleInertiaRequests::class', '\Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class');
+
+        $this->line("");
+        $this->info("Frontend scaffold installed.");
+        
+        $this->line("");
+        $this->info("Make sure you migrate your database fresh");
     }
 }
