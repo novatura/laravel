@@ -27,6 +27,12 @@ Install basic login/register functionality with Mantine UI.
 php artisan novatura:scaffold:install
 ```
 
+#### Make Inertia page
+
+```bash
+php artisan novatura:make:page {name}
+```
+
 ## Local Development
 
 Local development is a bit tricky, because we need to mount this repository into the docker container of a sandbox/testing project.
