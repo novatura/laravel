@@ -23,7 +23,11 @@ trait HasFile
             $oldFilePath = null;
 
             if ($this->$variableName !== null) {
-                $oldFilePath = $this->getStorageLocation($this->$variableName);
+                try {
+                    $oldFilePath = $this->getStorageLocation($this->$variableName);
+                } catch (\ErrorException $e) {
+                    // It's fine :^)
+                }
             }
 
             list(, $filetype) = explode("/", $file->getMimeType());
