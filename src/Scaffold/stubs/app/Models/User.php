@@ -8,8 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Novatura\Laravel\Scaffold\Lib\Traits\HasEmailVerification;
-use Novatura\Laravel\Scaffold\Lib\Traits\HasFile;
+use Novatura\Laravel\Core\Traits\HasEmailVerification;
+use Novatura\Laravel\Core\Traits\HasFile;
 
 class User extends Authenticatable
 {
