@@ -9,7 +9,7 @@ use Novatura\Laravel\Support\GenerateStub;
 
 class Make extends Command
 {
-    protected $signature = 'novatura:repository:make --model={modelName : The name of the model} {--i|interface : Include an Interface}';
+    protected $signature = 'novatura:make:repository --model={modelName : The name of the model} {--i|interface : Include an Interface}';
 
     protected $description = 'Create scaffolding for a repository based on a model.';
 
