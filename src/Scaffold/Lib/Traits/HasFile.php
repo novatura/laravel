@@ -16,7 +16,7 @@ trait HasFile
         }
 
         $modelName = class_basename($this);
-        $username = explode('@', $email)[0];
+        $username = base64_encode($email);
 
         foreach ($fileArray as $variableName => $file) {
 
