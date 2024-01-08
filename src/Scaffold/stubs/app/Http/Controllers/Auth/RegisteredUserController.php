@@ -40,10 +40,6 @@ class RegisteredUserController extends Controller
             'password' => $request->password,
         ]);
 
-        if ($request->avatar != null){
-            $user->uploadFile(['avatar_url' => $request->avatar], $request->email);
-        }
-
         event(new Registered($user));
 
         Auth::login($user);
