@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Inertia\Response;
+use Illuminate\Http\Request;
+
+
+class UserController extends Controller
+{
+    /*
+        Fetches data for a table of users
+    */
+    public function index() 
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            // Fetch roles and permissions for each user, then add them to the user object
+            $roles = $user->roles();
+            $perms = [];
+            foreach ($user->roles as $role) {
+                $perms = array_merge($perms, $role->permissions()->select("name")->get()->toArray());
+            }
+
+            $user->roles = $roles;
+            $user->permissions = $perms;
+        }
+
+        dd($users->toArray());
+    }
+
+    /*
+        Fetches data for a single user, by ID
+    */
+    public function show(Request $request, $id): Response
+    {
+        $user = User::find($id)->toArray();
+
+        dd($user);
+    }
+
+    public function update(Request $request, $id): Response
+    {
+        $user = User::find($id)->toArray();
+
+        dd($user);
+    }
+}

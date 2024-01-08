@@ -30,7 +30,7 @@ class RoleSeeder extends Seeder
         //  Update the names of existing roles or permissions
 
         $rolesData = [
-            'user' => [],
+            'user' => ['index_user', 'show_user', 'edit_user', 'update_user', 'delete_user'],
         ];
         
         // Create roles
