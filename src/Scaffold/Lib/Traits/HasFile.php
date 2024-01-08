@@ -62,6 +62,14 @@ trait HasFile
         return 'public/' . $storage_location;
     }
 
+    public function deleteFile($variableName){
+        $storage_location = $this->getStorageLocation($this->$variableName);
+
+        if(Storage::exists($storage_location)){
+            Storage::delete($storage_location);
+        }
+    }
+
     public function deleteWithFiles(array $variableNames){
 
         $storage_locations = [];
