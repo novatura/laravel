@@ -11,6 +11,8 @@ use Novatura\Laravel\RolesAndPermissions\Commands\AddController as RolesAndPermi
 
 use Novatura\Laravel\ModelLogging\Commands\Install as ModelLoggingInstallCommand;
 
+use Novatura\Laravel\UserHistory\Commands\Install as UserHistoryInstallCommand;
+
 
 class NovaturaLaravelProvider extends ServiceProvider
 {
@@ -22,6 +24,7 @@ class NovaturaLaravelProvider extends ServiceProvider
             RolesAndPermissionAddSeederCommand::class,
             RolesAndPermissionAddControllerCommand::class,
             ModelLoggingInstallCommand::class,
+            UserHistoryInstallCommand::class,
         ]);
     }
 
