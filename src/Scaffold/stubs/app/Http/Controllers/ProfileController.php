@@ -55,11 +55,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        try {
-            $user->deleteWithFiles(['avatar_url']);
-        } catch (\ErrorException $e) {
-            // It's fine :^)
-        }
+        $user->deleteWithFiles(['avatar_url']);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -71,11 +67,7 @@ class ProfileController extends Controller
      * Update user's avatar.
      */
     public function avatar_destroy(Request $request) {
-        try {
-            $request->user()->deleteFile('avatar_url');
-        } catch (\ErrorException $e) {
-            return redirect()->back()->withErrors(['avatar_url' => 'Avatar not found.']);
-        }
+        $request->user()->deleteFile('avatar_url');
 
         return redirect()->back();
     }

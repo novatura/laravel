@@ -69,7 +69,7 @@ function UpdateProfile() {
                                         id="avatar"
                                         error={errors.avatar}
                                     />
-                                    {!user.avatar_url.startsWith("https://www.gravatar.com") && (
+                                    {!!user.avatar_url && (
                                         <Button
                                             variant="filled"
                                             color="red"

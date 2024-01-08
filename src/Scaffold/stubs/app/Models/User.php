@@ -79,15 +79,4 @@ class User extends Authenticatable
         return !is_null($this->two_factor_secret);
     }
 
-    /**
-     * Overrides the getAttribute method to add default avatar url.
-     */
-    public function getAvatarUrlAttribute()
-    {
-        if ($this->attributes['avatar_url'] !== null) {
-            return $this->attributes['avatar_url'];
-        }
-        return "https://www.gravatar.com/avatar/" . md5(strtolower($this->attributes['email'])) . "?s=160&d=404";
-    }
-
 }
