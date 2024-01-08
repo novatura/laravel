@@ -68,6 +68,10 @@ trait HasFile
         if(Storage::exists($storage_location)){
             Storage::delete($storage_location);
         }
+
+        $this->$variableName = null;
+
+        $this->save();
     }
 
     public function deleteWithFiles(array $variableNames){
