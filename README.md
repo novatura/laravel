@@ -2,7 +2,7 @@
 
 ## Repository Tracking
 
-- [ ] Frontend scaffolding (custom implementation of Breeze)
+- [x] Frontend scaffolding (custom implementation of Breeze)
 - [x] Roles and Permissions scaffolding
 - [x] Model logging scaffolding
 - [ ] User History scaffolding
@@ -93,7 +93,8 @@ The following steps are going to have you *create a fresh laravel project* and *
      ```
 
 6. Start sail: `./vendor/bin/sail up`
-7. Make a git commit in your sandbox project
+7. Link storage: `./vendor/bin/sail storage:link`
+8. Make a git commit in your sandbox project
     - This is so that you can constantly roll back to the clean slate 😉
 
 At this stage, you can use our commands and such, e.g. `php artisan novatura:scaffold:install`
