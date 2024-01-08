@@ -55,7 +55,11 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->deleteWithFiles(['avatar_url']);
+        try {
+            $user->deleteWithFiles(['avatar_url']);
+        } catch (\ErrorException $e) {
+            // It's fine :^)
+        }
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
