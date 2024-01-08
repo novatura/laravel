@@ -3,6 +3,7 @@
 namespace Novatura\Laravel;
 
 use Illuminate\Support\ServiceProvider;
+use Novatura\Laravel\MakeCommands\Commands\InertiaPageCommand;
 use Novatura\Laravel\Scaffold\Commands\InstallCommand;
 
 use Novatura\Laravel\RolesAndPermissions\Commands\Install as RolesAndPermissionInstallCommand;
@@ -22,6 +23,7 @@ class NovaturaLaravelProvider extends ServiceProvider
             RolesAndPermissionAddSeederCommand::class,
             RolesAndPermissionAddControllerCommand::class,
             ModelLoggingInstallCommand::class,
+            InertiaPageCommand::class
         ]);
     }
 
