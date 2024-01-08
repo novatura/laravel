@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Observers;
+namespace Novatura\Laravel\Core\Observers;
 
-use App\Models\History;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 

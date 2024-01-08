@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Novatura\Laravel\Core\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -9,7 +9,7 @@ use \App\Models\Permission;
 use Illuminate\Support\Facades\Gate;
 use \App\Models\User;
 
-use App\Observers\ModelLoggingObserver;
+use Novatura\Laravel\Core\Observers\ModelLoggingObserver;
 
 class ModelLoggingProvider extends ServiceProvider
 {
