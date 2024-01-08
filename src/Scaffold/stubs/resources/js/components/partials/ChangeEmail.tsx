@@ -1,7 +1,6 @@
 import { useForm } from "@inertiajs/react";
 import { Card, Title, Stack, TextInput, Button } from "@mantine/core";
 import { FormEvent } from "react";
-import { notifications } from "@mantine/notifications"
 
 function ChangeEmail() {
 
@@ -13,18 +12,7 @@ function ChangeEmail() {
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        put(route('email.update'), {
-            onSuccess: () => notifications.show({
-                title: 'Email Updated',
-                message: 'Your Email has been updated successfully.',
-                color: 'green'
-            }),
-            onError: () => notifications.show({
-                title: 'Email Update Failed',
-                message: 'Your Email could not be changes.',
-                color: 'red'
-            }),
-        });
+        put(route('email.update'));
     }
 
     return (
