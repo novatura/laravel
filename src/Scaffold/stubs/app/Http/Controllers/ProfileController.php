@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\ProfileAvatarRequest;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,14 +32,14 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('avatar')) {
+            // dd($request->avatar);
+            $request->user()->uploadFiles(['avatar_url' => $request->avatar]);
         }
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+        return redirect()->back();
     }
 
     /**
@@ -65,11 +66,12 @@ class ProfileController extends Controller
     /**
      * Update user's avatar.
      */
-    public function avatar(ProfileAvatarRequest $request) {
-
-        $request->validated();
-
-        $request->user()->uploadFiles(['avatar_url' => $request->avatar]);
+    public function avatar_destroy(Request $request) {
+        try {
+            $request->user()->deleteFile('avatar_url');
+        } catch (\ErrorException $e) {
+            return redirect()->back()->withErrors(['avatar_url' => 'Avatar not found.']);
+        }
 
         return redirect()->back();
     }
