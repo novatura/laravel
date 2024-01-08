@@ -3,7 +3,7 @@ import { useForm, usePage } from "@inertiajs/react";
 import { Card, Title, Text, Stack, TextInput, Button, Group, Avatar } from "@mantine/core";
 import { FormEvent } from "react";
 import { notifications } from "@mantine/notifications"
-import Gravatar from "@/components/Gravatar";
+import Gravatar from "@/components/ProfileAvatar";
 
 function UpdateProfile() {
 
@@ -31,6 +31,17 @@ function UpdateProfile() {
         });
     }
 
+    const handleAvatarChange = (e: File | null) => {
+
+        if(e != null){
+            console.log(e);
+            router.post(route('profile.avatar'), {
+                avatar: e
+            })
+        }
+
+    }
+
     return (
         <Card withBorder>
             <Stack>
@@ -39,9 +50,15 @@ function UpdateProfile() {
                         <Title order={2}>Profile</Title>
                         <Text>Update your profile</Text>
                     </Stack>
-                    <Gravatar email={user.email} color="blue" size="lg">
-                        {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
-                    </Gravatar>
+                    <FileButton onChange={handleAvatarChange} accept="image/png,image/jpeg">
+                            {(props) => 
+                            <UnstyledButton {...props}>
+                                <Gravatar email={user.email} color="blue" size="lg">
+                                    {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
+                                </Gravatar>
+                            </UnstyledButton>
+                            }
+                        </FileButton>
                 </Group>
                 <form onSubmit={handleSubmit}>
                     <Stack maw={512}>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ProfileAvatarRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -53,11 +54,23 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        $user->deleteWithFiles(['avatar_url']);
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    /**
+     * Update user's avatar.
+     */
+    public function avatar(ProfileAvatarRequest $request) {
+
+        $request->validated();
+
+        $request->user()->uploadFiles(['avatar_url' => $request->avatar]);
+
+        return redirect()->back();
     }
 }

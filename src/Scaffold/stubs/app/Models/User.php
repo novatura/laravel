@@ -9,10 +9,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Novatura\Laravel\Scaffold\Lib\Traits\HasEmailVerification;
+use Novatura\Laravel\Scaffold\Lib\Traits\HasFile;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, HasUuids, HasEmailVerification;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids, HasEmailVerification, HasFile;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +25,7 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'avatar_url'
     ];
 
     /**

@@ -3,7 +3,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { Avatar, Indicator, Menu, UnstyledButton } from "@mantine/core";
 import { UserIcon, LogOutIcon, MailWarningIcon } from "lucide-react"
 import { notifications } from "@mantine/notifications"
-import Gravatar from "@/components/Gravatar";
+import ProfileAvatar from "@/components/ProfileAvatar";
 
 function UserMenu() {
 
@@ -14,9 +14,9 @@ function UserMenu() {
             <Menu.Target>
                 <UnstyledButton>
                     <Indicator disabled={!!user.email_verified_at}>
-                        <Gravatar color="blue" radius="sm" email={user.email}>
+                        <ProfileAvatar color="blue" radius="sm" email={user.email} src={user.avatar_url}>
                             {user.full_name.split(" ").map(t => t[0]).join("").toUpperCase()}
-                        </Gravatar>
+                        </ProfileAvatar>
                     </Indicator>
                 </UnstyledButton>
             </Menu.Target>
