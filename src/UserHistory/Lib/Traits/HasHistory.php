@@ -4,9 +4,9 @@ namespace Novatura\Laravel\UserHistory\Lib\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use App\Models\History;
+use Novatura\Laravel\UserHistory\Lib\Models\History;
 
-trait HistoryTrait
+trait HasHistory
 {
     public static function createWithHistory(array $data, string $description)
     {

@@ -19,8 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('model_id');
             $table->json('old_data')->nullable();
             $table->json('new_data')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreignUuid('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

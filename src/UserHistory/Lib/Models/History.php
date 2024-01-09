@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace Novatura\Laravel\UserHistory\Lib\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use \App\Models\User;
 
 class History extends Model
 {
@@ -24,5 +25,10 @@ class History extends Model
         'new_data' => 'json',
     ];
 
-    
+    protected $with =['user'];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
 }
