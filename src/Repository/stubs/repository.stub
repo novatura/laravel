@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Repositories;
+
+use {{ model_path }};
+
+class {{ repo_class_name }} 
+{
+
+    protected {{ model_class_name }} ${{ model_name }};
+
+    public function __construct({{ model_class_name }} ${{ model_name }}){
+        $this->{{ model_name }} = ${{ model_name }};
+    }
+
+    public function getAll{{model_class_name}}() 
+    {
+        return $this->{{ model_name }}->all();
+    }
+
+    public function get{{model_class_name}}ById(${{model_name}}Id) 
+    {
+        return $this->{{ model_name }}->findOrFail(${{model_name}}Id);
+    }
+
+    public function delete{{model_class_name}}(${{model_name}}Id) 
+    {
+        return $this->{{ model_name }}->destroy(${{model_name}}Id);
+    }
+
+    public function create{{model_class_name}}(array $data) 
+    {
+        return $this->{{ model_name }}->create($data);
+    }
+
+    public function update{{model_class_name}}(${{model_name}}Id, array $newData) 
+    {
+        return $this->{{ model_name }}->whereId(${{model_name}}Id)->update($newData);
+    }
+}

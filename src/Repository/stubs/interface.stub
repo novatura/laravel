@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories\Interfaces;
+
+interface {{model_class_name}}Interface 
+{
+    public function getAll{{model_class_name}}();
+    public function get{{model_class_name}}ById(${{model_name}}Id);
+    public function delete{{model_class_name}}(${{model_name}}Id);
+    public function create{{model_class_name}}(array $newData);
+    public function update{{model_class_name}}(${{model_name}}Id, array $newData);
+}
