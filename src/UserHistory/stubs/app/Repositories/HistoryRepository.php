@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use Novatura\Laravel\UserHistory\Lib\History;
-use Interfaces\HistoryInterface;
+use Novatura\Laravel\UserHistory\Lib\Models\History;
+use App\Repositories\Interfaces\HistoryInterface;
 
 class HistoryRepository implements HistoryInterface
 {
 
-    protected History $user;
+    protected History $history;
 
-    public function __construct(History $user){
-        $this->user = $user;
+    public function __construct(History $history){
+        $this->history = $history;
     }
 
     public function getAllHistory() 
@@ -25,9 +25,9 @@ class HistoryRepository implements HistoryInterface
         
     }
 
-    public function getHistoryById($userId) 
+    public function getHistoryById($historyId) 
     {
-        return $this->user->findOrFail($userId);
+        return $this->history->findOrFail($historyId);
     }
 
 }
