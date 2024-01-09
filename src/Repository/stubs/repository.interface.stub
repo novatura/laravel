@@ -8,8 +8,6 @@ use App\Repositories\Interfaces\{{ interface_name }};
 class {{ repo_class_name }} implements {{ interface_name }}
 {
 
-    protected {{ model_class_name }} ${{ model_name }};
-
     public function getAll{{model_class_name}}() 
     {
         return {{ model_class_name }}::all();
