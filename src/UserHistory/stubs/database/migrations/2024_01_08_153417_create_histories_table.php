@@ -16,7 +16,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('action');
             $table->string('model');
-            $table->unsignedBigInteger('model_id');
+            $table->string('model_id');
             $table->json('old_data')->nullable();
             $table->json('new_data')->nullable();
             $table->foreignUuid('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
