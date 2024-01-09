@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use {{ model_path }};
-use Interfaces\{{ interface_name }};
+use App\Repositories\Interfaces\{{ interface_name }};
 
 class {{ repo_class_name }} implements {{ interface_name }}
 {
