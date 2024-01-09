@@ -34,7 +34,7 @@ class Make extends Command
                 $generateFiles = [
                     ['path' => app_path("Repositories/{$modelName}Repository.php"), 'stub' => 'repository.interface.stub', 
                         'variables' => ['model_path' => $model, 'repo_class_name' => $modelName . 'Repository', 'model_class_name' => $modelName, 'model_name' => strtolower($modelName), 'interface_name' => "{$modelName}Interface"]],
-                    ['path' => app_path("Repositories/Interface/{$modelName}Interface.php"), 'stub' => 'interface.stub', 
+                    ['path' => app_path("Repositories/Interfaces/{$modelName}Interface.php"), 'stub' => 'interface.stub', 
                         'variables' => ['interface_name' => "{$modelName}Interface", "model_class_name" => $modelName, 'model_name' => strtolower($modelName)]
                     ]
                 ];
