@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-interface HistoryRepositoryInterface 
+interface HistoryInterface 
 {
     public function getAllHistory();
     public function getHistoryById($historyId);
