@@ -8,35 +8,30 @@ use App\Repositories\Interfaces\UserInterface;
 class UserRepository implements UserInterface
 {
 
-    protected User $user;
-
-    public function __construct(User $user){
-        $this->user = $user;
-    }
 
     public function getAllUser() 
     {
-        return $this->user->all();
+        return User::all();
     }
 
     public function getUserById($userId) 
     {
-        return $this->user->findOrFail($userId);
+        return User::findOrFail($userId);
     }
 
     public function deleteUser($userId) 
     {
-        $this->user->destroy($userId);
+        User::destroy($userId);
     }
 
     public function createUser(array $data) 
     {
-        return $this->user->create($data);
+        return User::create($data);
     }
 
     public function updateUser($userId, array $newData) 
     {
-        return $this->user->whereId($userId)->update($newData);
+        return User::whereId($userId)->update($newData);
     }
 
     public function getAllUsersWithRoles(){
@@ -44,10 +39,10 @@ class UserRepository implements UserInterface
     }
 
     public function addRole($userId, $roleId){
-        return $this->findOrFail($userId)->roles()->attach($roleId);
+        return User::findOrFail($userId)->roles()->attach($roleId);
     }
 
     public function removeRole($userId, $roleId){
-        return $this->findOrFail($userId)->roles()->detach($roleId);
+        return User::findOrFail($userId)->roles()->detach($roleId);
     }
 }
