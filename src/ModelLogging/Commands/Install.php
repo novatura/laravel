@@ -4,9 +4,15 @@ namespace Novatura\Laravel\ModelLogging\Commands;
 
 use Illuminate\Console\Command;
 use Novatura\Laravel\Support\MakeFile;
+use Novatura\Laravel\Core\Utils\FileUtils;
+use Illuminate\Support\Facades\File;
 
 class Install extends Command
 {
+
+    use FileUtils;
+
+
     protected $signature = 'novatura:model_logging:install';
 
     protected $description = 'Create files for automated logging on all model changes';
@@ -20,13 +26,11 @@ class Install extends Command
 
     public function handle()
     {
-        $generateFiles = [
-            ['path' => app_path('Providers/ModelLoggingProvider.php'), 'stub' => 'provider.stub'],
-            ['path' => app_path('Observers/ModelLoggingObserver.php'), 'stub' => 'observer.stub'],
-        ];
+        $this->info("Copying new files...");
+        File::copyDirectory(__DIR__ . '/../stubs', base_path());
 
-        (new MakeFile($this, $generateFiles))->generate();
-        $this->comment("\nTo complete the setup:\n - Include the ModelLoggingProvider in the app config file");
+        $this->info("Adding ModelLoggingProvider to config/App.php...");
+        $this->addProvider('App\Providers\ModelLoggingProvider::class');
     }
 
 }
