@@ -42,20 +42,20 @@ class Install extends Command
 
         $this->info("Adding Routes...");
         $this->addRoutes(['auth'], [
-            "Route::get('/users', [UserController::class, 'index'])->middleware('can:index_users')->name('users.index');",
-            "Route::get('/users/{id}', [UserController::class, 'show'])->middleware('can:show_users')->name('users.show');",
-            "Route::patch('/users/{id}', [UserController::class, 'update'])->middleware('can:update_users')->name('users.update');",
-            "Route::delete('/users/{id}', [UserController::class, 'destroy'])->middleware('can:delete_users')->name('users.destroy');",
-            "Route::patch('/users/{userId}/roles', [UserController::class, 'updateRoles'])->middleware('can:update_users_roles')->name('users.update.roles');",
-            "Route::post('/users/{userId}/roles/{roleId}', [UserController::class, 'addRole'])->middleware('can:add_users_roles')->name('users.add.roles');",
-            "Route::delete('/users/{userId}/roles/{roleId}', [UserController::class, 'removeRole'])->middleware('can:remove_users_roles')->name('users.remove.roles');",
-            "Route::get('/roles', [RoleController::class, 'index'])->middleware('can:index_roles')->name('roles.index');",
-            "Route::get('/roles/{id}', [RoleController::class, 'show'])->middleware('can:show_roles')->name('roles.show');",
-            "Route::post('/roles', [RoleController::class, 'store'])->middleware('can:store_roles')->name('roles.store');",
-            "Route::patch('/roles/{id}', [RoleController::class, 'update'])->middleware('can:update_roles')->name('roles.update');",
-            "Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->middleware('can:delete_roles')->name('roles.destroy');",
-            "Route::patch('/roles/{roleId}/permissions', [RoleController::class, 'updatePermission'])->middleware('can:update_roles_permissions')->name('roles.update.permission');",
-            "Route::post('/roles/{roleId}/users', [RoleController::class, 'addUsers'])->middleware('can:add_roles_users')->name('roles.add.users');",
+            "Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->middleware('can:users.index')->name('users.index');",
+            "Route::get('/users/{id}', [\App\Http\Controllers\UserController::class, 'show'])->middleware('can:users.show')->name('users.show');",
+            "Route::patch('/users/{id}', [\App\Http\Controllers\UserController::class, 'update'])->middleware('can:users.update')->name('users.update');",
+            "Route::delete('/users/{id}', [\App\Http\Controllers\UserController::class, 'destroy'])->middleware('can:users.destroy')->name('users.destroy');",
+            "Route::patch('/users/{userId}/roles', [\App\Http\Controllers\UserController::class, 'updateRoles'])->middleware('can:users.update.roles')->name('users.update.roles');",
+            "Route::post('/users/{userId}/roles/{roleId}', [\App\Http\Controllers\UserController::class, 'addRole'])->middleware('can:users.add.roles')->name('users.add.roles');",
+            "Route::delete('/users/{userId}/roles/{roleId}', [\App\Http\Controllers\UserController::class, 'removeRole'])->middleware('can:users.remove.roles')->name('users.remove.roles');",
+            "Route::get('/roles', [\App\Http\Controllers\RoleController::class, 'index'])->middleware('can:roles.index')->name('roles.index');",
+            "Route::get('/roles/{id}', [\App\Http\Controllers\RoleController::class, 'show'])->middleware('can:roles.show')->name('roles.show');",
+            "Route::post('/roles', [\App\Http\Controllers\RoleController::class, 'store'])->middleware('can:roles.store')->name('roles.store');",
+            "Route::patch('/roles/{id}', [\App\Http\Controllers\RoleController::class, 'update'])->middleware('can:roles.update')->name('roles.update');",
+            "Route::delete('/roles/{id}', [\App\Http\Controllers\RoleController::class, 'destroy'])->middleware('can:roles.destroy')->name('roles.destroy');",
+            "Route::patch('/roles/{roleId}/permissions', [\App\Http\Controllers\RoleController::class, 'updatePermission'])->middleware('can:roles.update.permission')->name('roles.update.permission');",
+            "Route::post('/roles/{roleId}/users', [\App\Http\Controllers\RoleController::class, 'addUsers'])->middleware('can:roles.add.users')->name('roles.add.users');",
         ]);
 
         $this->info("Adding Provider to Config/App.php...");
