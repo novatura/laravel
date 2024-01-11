@@ -61,6 +61,17 @@ class Install extends Command
         $this->info("Adding Provider to Config/App.php...");
         $this->addProvider('App\Providers\PermissionGateProvider::class');
 
+        $this->info("Binding Repositories...");
+        $this->call('novatura:bind:repository', [
+            'modelName' => 'User', 
+        ]);
+        $this->call('novatura:bind:repository', [
+            'modelName' => 'Role', 
+        ]);
+        $this->call('novatura:bind:repository', [
+            'modelName' => 'Permission', 
+        ]);
+
         //     ['path' => app_path('providers/PermissionGateProvider.php'), 'stub' => 'permission_provider.stub'],
         // ];
 
