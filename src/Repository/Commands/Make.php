@@ -68,33 +68,15 @@ class Make extends Command
 
         (new MakeFile($this, $generateFiles))->generate();
 
-
-        $providerExists = $this->providerExists();
-
-        if(!$providerExists){
-            // Call Make Provider
-            $this->call('novatura:make:repository:provider', [
-                'modelName' => $modelName,  // Pass any required options or arguments 
-            ]);
-        } else {
-            if($this->option('interface')){
-                $this->bindRepository((new GenerateStub(__DIR__ . '/../stubs/bind.stub', ['interface_name' => $modelName . 'Interface', 'repository_name' => $modelName . 'Repository']))->generate());
-            }
-
-        }
-
+        $this->call('novatura:bind:repository', [
+            'modelName' => $modelName,  // Pass any required options or arguments 
+        ]);
 
         // if(!$providerExists){
         //     $this->comment("\nTo complete the setup:\n - Add the RepositoryServiceProvider to your app config\n");
         // } else {
         //     $this->comment("\nTo complete the setup:\n - Bind the Repository and Interface in the RepositoryServiceProvider\n");
         // }
-
-    }
-
-    public function providerExists(){
-
-        return file_exists(app_path('Providers/RepositoryServiceProvider.php'));
 
     }
 
