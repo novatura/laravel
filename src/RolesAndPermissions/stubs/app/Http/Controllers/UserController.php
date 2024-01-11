@@ -7,15 +7,18 @@ use Inertia\Response;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Repositories\Interfaces\UserInterface;
+use App\Repositories\Interfaces\RoleInterface;
 
 class UserController extends Controller
 {
 
     private UserInterface $userRepository;
+    private RoleInterface $roleRepository;
 
-    public function __construct(UserInterface $userRepository) 
+    public function __construct(UserInterface $userRepository, RoleInterface $roleRepository, ) 
     {
         $this->userRepository = $userRepository;
+        $this->roleRepository = $roleRepository;
     }
 
     /*
@@ -25,6 +28,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/Index', [
             'users' => $this->userRepository->getAllUsersWithRoles(),
+            'roles' => $this->roleRepository->getAllRoles(),
         ]);
     }
 
@@ -39,15 +43,51 @@ class UserController extends Controller
     }
 
     public function addRole(Request $request, $user_id, $role_id){
-        $this->userRepository->addRole($user_id, $role_id);
+        try {
+            $this->userRepository->addRole($user_id, $role_id);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => $e->getMessage()
+            ]);
+        }
 
         return redirect()->back();
     }
 
     public function removeRole(Request $request, $user_id, $role_id){
-        $this->userRepository->removeRole($user_id, $role_id);
+        try {
+            $this->userRepository->removeRole($user_id, $role_id);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => $e->getMessage()
+            ]);
+        }
 
         return redirect()->back();
+    }
+
+    public function updateRoles(Request $request, $user_id){
+        try {
+            $this->userRepository->updateRoles($user_id, $request->roles);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => $e->getMessage()
+            ]);
+        }
+        return redirect()->back();
+    }
+
+    public function destroy($user_id){
+        try {
+            $this->userRepository->deleteUser($user_id);
+        } catch (\Exception $e) {
+            return redirect()->back()->with([
+                'error' => $e->getMessage()
+            ]);
+        }
+
+        return redirect()->back();
+
     }
 
 }

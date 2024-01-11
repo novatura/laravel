@@ -38,11 +38,31 @@ class UserRepository implements UserInterface
         return User::with('roles')->get();
     }
 
+    public function getAllUsersWithRole($roleId) {
+        return User::whereHas('roles', function($query) use ($roleId) {
+            $query->where('role_id', $roleId);
+        })->get();
+    }
+
+    public function getAllUsersWithoutRole($roleId) {
+        return User::whereDoesntHave('roles', function($query) use ($roleId) {
+            $query->where('role_id', $roleId);
+        })->get();
+    }
+
     public function addRole($userId, $roleId){
         return User::findOrFail($userId)->roles()->attach($roleId);
     }
 
     public function removeRole($userId, $roleId){
         return User::findOrFail($userId)->roles()->detach($roleId);
+    }
+
+    public function updateRoles($userId, $roleIds){
+
+        $user = User::findOrFail($userId);
+        $user->roles()->detach();
+        $user->roles()->attach($roleIds);
+
     }
 }

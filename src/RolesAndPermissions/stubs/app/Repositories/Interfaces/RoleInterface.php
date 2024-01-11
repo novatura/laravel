@@ -9,7 +9,7 @@ interface RoleInterface
     public function deleteRole($roleId);
     public function createRole(array $roleDetails);
     public function updateRole($roleId, array $newDetails);
-    public function addPermission($roleId, $permissionId);
-    public function removePermission($roleId, $permissionId);
+    public function updatePermission($roleId, $permissionIds);
+    public function addUsers($roleId, $userIds);
 }
 

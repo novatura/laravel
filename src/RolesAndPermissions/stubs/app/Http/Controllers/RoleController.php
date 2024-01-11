@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddUsersToRoleRequest;
+use App\Http\Requests\DestroyRoleRequest;
 use App\Repositories\Interfaces\RoleInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Http\Requests\StoreRoleRequest;
+use App\Http\Requests\UpdateRolePermissionRequest;
+use App\Repositories\Interfaces\PermissionInterface;
+use App\Repositories\Interfaces\UserInterface;
 
 class RoleController extends Controller
 {
 
     private RoleInterface $roleRepository;
+    private PermissionInterface $permissionRepository;
+    private UserInterface $userRepository;
 
-    public function __construct(RoleInterface $roleRepository) 
+    public function __construct(RoleInterface $roleRepository, PermissionInterface $permissionRepository, UserInterface $userRepository) 
     {
         $this->roleRepository = $roleRepository;
+        $this->permissionRepository = $permissionRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -36,18 +45,29 @@ class RoleController extends Controller
         $role = $this->roleRepository->getRoleById($id);
 
         return Inertia::render('Roles/Role', [
-            'role' => $role
+            'role' => $role,
+            'permissions' => $this->permissionRepository->getAllPermission(),
+            'users' => $this->userRepository->getAllUsersWithRole($id),
+            'users_without' => $this->userRepository->getAllUsersWithoutRole($id),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(DestroyRoleRequest $request, $id)
     {
-        $this->roleRepository->deleteRole($id);
+        try {
+            $request->validated();
 
-        return response()->back();
+            $this->roleRepository->deleteRole($id);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'error' => $e->getMessage()
+            ]);
+        }
+
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -57,9 +77,15 @@ class RoleController extends Controller
     {
         $values = $request->validated();
 
-        $role = $this->roleRepository->createRole($values);
+        try {
+            $this->roleRepository->createRole($values);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'error' => $e->getMessage()
+            ]);
+        }
 
-        return response()->json($role);
+        return redirect()->back();
     }
 
     /**
@@ -75,14 +101,18 @@ class RoleController extends Controller
         return redirect()->back();
     }
 
-    public function addPermission($roleId, $permissionId){
-        $this->roleRepository->addPermission($roleId, $permissionId);
+    public function updatePermission(UpdateRolePermissionRequest $request, $roleId){
+        $values = $request->validated();
+        
+        $this->roleRepository->updatePermission($roleId, $values['permissions']);
 
         return redirect()->back();
     }
 
-    public function removePermission($roleId, $permissionId){
-        $this->roleRepository->removePermission($id, $permissionId);
+    public function addUsers(AddUsersToRoleRequest $request, $roleId){
+        $values = $request->validated();
+
+        $this->roleRepository->addUsers($roleId, $values['users']);
 
         return redirect()->back();
     }

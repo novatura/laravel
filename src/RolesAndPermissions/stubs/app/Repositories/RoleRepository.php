@@ -7,7 +7,6 @@ use App\Models\Role;
 
 class RoleRepository implements RoleInterface 
 {
-
     public function getAllRoles() 
     {
 
@@ -35,11 +34,14 @@ class RoleRepository implements RoleInterface
     }
 
 
-    public function addPermission($roleId, $permissionId){
-        return Role::findOrFail($roleId)->permissions()->attach($permissionId);
+    public function updatePermission($roleId, $permissionIds) {
+        $role = Role::findOrFail($roleId);
+        $role->permissions()->detach();
+        return $role->permissions()->attach($permissionIds);
     }
 
-    public function removePermission($roleId, $permissionId){
-        return Role::findOrFail($roleId)->permissions()->detach($permissionId);
-    }
+    public function addUsers($roleId, $userIds) {
+        $role = Role::findOrFail($roleId);
+        return $role->users()->attach($userIds);
+    } 
 }
