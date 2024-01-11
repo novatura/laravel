@@ -110,4 +110,57 @@ trait FileUtils
         file_put_contents($routeFile, $routeContents);
     }
 
+    function bindRepository($bind){
+
+        $file = app_path('Providers/RepositoryServiceProvider.php');
+
+        $fileContent = file_get_contents($file);
+
+        $pattern = '/public\s+function\s+register\s*\([^)]*\)\s*{([^}]*)}/s';
+
+        // Match all occurrences of the pattern
+        preg_match_all($pattern, $fileContent, $matches);
+
+        // Extract the route names from the matches
+        $existing = $matches[1];
+
+        $newCode = $existing[0] . "\t" . $bind . "\n";
+
+        $string = "public function register()\n\t{" . $newCode . "\t}";
+
+        // Perform the replacement
+        $newFileContent = preg_replace($pattern, $string, $fileContent);
+
+        // Write the modified content back to the file
+        file_put_contents($file, $newFileContent);
+
+    }
+
+    function addProvider($provider){
+        $file = base_path('config/app.php');
+
+        $fileContent = file_get_contents($file);
+
+        // $pattern = '/(\'providers\'\s*=>\s*ServiceProvider::defaultProviders\(\)->merge\(\[.+?\]\)->toArray\(\),)/s';
+        $pattern = '/\'providers\'\s*=>\s*ServiceProvider::defaultProviders\(\)->merge\(\[(.+?)\]\)/s';
+
+        // Match all occurrences of the pattern
+        preg_match_all($pattern, $fileContent, $matches);
+
+        // Extract the route names from the matches
+        $existing = $matches[1];
+
+
+        $newCode = $existing[0] . "\t" . $provider . ",\n";
+
+        $string = "'providers' => ServiceProvider::defaultProviders()->merge([" . $newCode . "\t])";
+
+        // Perform the replacement
+        $newFileContent = preg_replace($pattern, $string, $fileContent);
+
+        // Write the modified content back to the file
+        file_put_contents($file, $newFileContent);
+
+    }
+
 }

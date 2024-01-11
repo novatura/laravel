@@ -28,6 +28,7 @@ class Make extends Command
     public function handle()
     {
 
+
         $modelName = $this->argument('modelName');
 
         $model = sprintf('App\\Models\\' . $modelName);
@@ -64,23 +65,30 @@ class Make extends Command
             ];
         }
 
-        $providerExists = $this->providerExists();
-
-        if(!$providerExists){
-            $generateFiles[] = [
-                'path' => app_path("Providers/RepositoryServiceProvider.php"), 
-                'stub' => 'provider.stub', 
-                'variables' => ['interface_name' => $modelName . 'Interface', 'repository_name' => $modelName . 'Repository']
-            ];
-        }
 
         (new MakeFile($this, $generateFiles))->generate();
 
+
+        $providerExists = $this->providerExists();
+
         if(!$providerExists){
-            $this->comment("\nTo complete the setup:\n - Add the RepositoryServiceProvider to your app config\n");
+            // Call Make Provider
+            $this->call('novatura:make:repository:provider', [
+                'modelName' => $modelName,  // Pass any required options or arguments 
+            ]);
         } else {
-            $this->comment("\nTo complete the setup:\n - Bind the Repository and Interface in the RepositoryServiceProvider\n");
+            if($this->option('interface')){
+                $this->bindRepository((new GenerateStub(__DIR__ . '/../stubs/bind.stub', ['interface_name' => $modelName . 'Interface', 'repository_name' => $modelName . 'Repository']))->generate());
+            }
+
         }
+
+
+        // if(!$providerExists){
+        //     $this->comment("\nTo complete the setup:\n - Add the RepositoryServiceProvider to your app config\n");
+        // } else {
+        //     $this->comment("\nTo complete the setup:\n - Bind the Repository and Interface in the RepositoryServiceProvider\n");
+        // }
 
     }
 
