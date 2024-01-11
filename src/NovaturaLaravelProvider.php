@@ -6,8 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Novatura\Laravel\Scaffold\Commands\InstallCommand;
 
 use Novatura\Laravel\RolesAndPermissions\Commands\Install as RolesAndPermissionInstallCommand;
-use Novatura\Laravel\RolesAndPermissions\Commands\AddSeeder as RolesAndPermissionAddSeederCommand;
-use Novatura\Laravel\RolesAndPermissions\Commands\AddController as RolesAndPermissionAddControllerCommand;
+use Novatura\Laravel\RolesAndPermissions\Commands\PermissionsGenerate as RolesAndPermissionPermissionsGenerateCommand;
 
 use Novatura\Laravel\ModelLogging\Commands\Install as ModelLoggingInstallCommand;
 
@@ -19,8 +18,7 @@ class NovaturaLaravelProvider extends ServiceProvider
         $this->commands([
             InstallCommand::class,
             RolesAndPermissionInstallCommand::class,
-            RolesAndPermissionAddSeederCommand::class,
-            RolesAndPermissionAddControllerCommand::class,
+            RolesAndPermissionPermissionsGenerateCommand::class,
             ModelLoggingInstallCommand::class,
         ]);
     }
