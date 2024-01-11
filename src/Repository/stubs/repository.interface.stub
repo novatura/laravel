@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Repositories;
+
+use {{ model_path }};
+use App\Repositories\Interfaces\{{ interface_name }};
+
+class {{ repo_class_name }} implements {{ interface_name }}
+{
+
+    public function getAll{{model_class_name}}() 
+    {
+        return {{ model_class_name }}::all();
+    }
+
+    public function get{{model_class_name}}ById(${{model_name}}Id) 
+    {
+        return {{ model_class_name }}::findOrFail(${{model_name}}Id);
+    }
+
+    public function delete{{model_class_name}}(${{model_name}}Id) 
+    {
+        return {{ model_class_name }}::destroy(${{model_name}}Id);
+    }
+
+    public function create{{model_class_name}}(array $data) 
+    {
+        return {{ model_class_name }}::create($data);
+    }
+
+    public function update{{model_class_name}}(${{model_name}}Id, array $newData) 
+    {
+        return {{ model_class_name }}::whereId(${{model_name}}Id)->update($newData);
+    }
+}

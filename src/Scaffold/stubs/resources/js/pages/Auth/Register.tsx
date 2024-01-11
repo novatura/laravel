@@ -74,7 +74,7 @@ function LoginPage() {
                             loading={processing}
                             mt="md"
                         >
-                            Login
+                            Register
                         </Button>
                     </Stack>
                 </form>

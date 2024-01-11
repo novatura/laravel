@@ -2,6 +2,7 @@
 
 namespace Novatura\Laravel\Core\Utils;
 
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 /**
@@ -78,6 +79,35 @@ trait FileUtils
         $this->replaceInFile("require __DIR__.'/auth.php';", $string . "\n\nrequire __DIR__.'/auth.php';", $web_route);
 
 
+    /**
+     * Get files in directory
+     * 
+     * @param string $directory The directory to get files from
+     * @param string $extension The extension to filter by (optional)
+     * 
+     * @return array<File>
+     */
+    function getFilesInDirectory(string $directory, string $extension = null)
+    {
+        $files = File::files($directory);
+
+        if ($extension) {
+            $files = array_filter($files, function ($file) use ($extension) {
+                return pathinfo($file, PATHINFO_EXTENSION) === $extension;
+            });
+        }
+
+        return $files;
+    }
+
+    /**
+     * Add Route
+     */
+    function addInertiaRoute(string $routeFile, string $route, string $name, string $pageRef)
+    {
+        $routeContents = file_get_contents($routeFile);
+        $routeContents .= PHP_EOL . PHP_EOL . "Route::get('$route', function () { return \Inertia\Inertia::render('$pageRef'); })->name('$name');";
+        file_put_contents($routeFile, $routeContents);
     }
 
 }

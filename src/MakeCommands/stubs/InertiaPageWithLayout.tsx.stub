@@ -1,0 +1,11 @@
+import {{layout}} from "@/layouts/{{layout}}";
+
+function {{name}}Page() {
+    return (
+        <{{layout}}>
+            
+        </{{layout}}>
+    );
+}
+
+export default {{name}}Page;

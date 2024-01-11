@@ -33,7 +33,12 @@ class RegisteredUserController extends Controller
     {
         $values = $request->validated();
 
-        $user = User::create($values);
+        $user = User::create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ]);
 
         event(new Registered($user));
 
