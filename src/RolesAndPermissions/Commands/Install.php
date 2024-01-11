@@ -58,6 +58,8 @@ class Install extends Command
             "Route::post('/roles/{roleId}/users', [RoleController::class, 'addUsers'])->middleware('can:add_roles_users')->name('roles.add.users');",
         ]);
 
+        $this->info("Adding Provider to Config/App.php...");
+        $this->addProvider('App\Providers\PermissionGateProvider::class');
 
         //     ['path' => app_path('providers/PermissionGateProvider.php'), 'stub' => 'permission_provider.stub'],
         // ];
