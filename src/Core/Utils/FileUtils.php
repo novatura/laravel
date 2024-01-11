@@ -78,7 +78,7 @@ trait FileUtils
 
         $this->replaceInFile("require __DIR__.'/auth.php';", $string . "\n\nrequire __DIR__.'/auth.php';", $web_route);
 
-
+    }
     /**
      * Get files in directory
      * 
