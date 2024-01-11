@@ -99,7 +99,7 @@ The following steps are going to have you *create a fresh laravel project* and *
      ```
 
 6. Start sail: `./vendor/bin/sail up`
-7. Link storage: `./vendor/bin/sail storage:link`
+7. Link storage: `./vendor/bin/sail artisan storage:link`
 8. Make a git commit in your sandbox project
     - This is so that you can constantly roll back to the clean slate 😉
 
