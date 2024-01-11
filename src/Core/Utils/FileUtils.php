@@ -51,6 +51,34 @@ trait FileUtils
         }
     }
 
+    function addRoutes(array $middlewareAliases, array $routes){
+
+        $web_route = base_path('routes/web.php');
+
+        $string;
+
+        if(empty($middlewareAliases)){
+
+            $string = implode("\n", $routes);
+
+        } else {
+            if(count($middlewareAliases) > 1){
+                $string = "Route::middleware([" . implode(",", array_map(function($alias) {
+                    return "'" . $alias . "'";
+                }, $middlewareAliases)) . "])->group(function () {\n";
+            } else {
+                $string = "Route::middleware('" . $middlewareAliases[0] . "')->group(function () {\n";
+            }
+            $routes_string = implode("\n", array_map(function($route) {
+                return "\t" . $route;
+            }, $routes));
+
+            $string = $string . $routes_string . "\n});";
+        }
+
+        $this->replaceInFile("require __DIR__.'/auth.php';", $string . "\n\nrequire __DIR__.'/auth.php';", $web_route);
+
+    }
     /**
      * Get files in directory
      * 

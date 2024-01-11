@@ -7,15 +7,15 @@ use Novatura\Laravel\Support\MakeFile;
 use Novatura\Laravel\Core\Utils\FileUtils;
 use Novatura\Laravel\Support\GenerateStub;
 
-class MakeProvider extends Command
+class BindRepository extends Command
 {
 
     use FileUtils;
 
 
-    protected $signature = 'novatura:make:repository:provider --model={modelName? : The name of the model}';
+    protected $signature = 'novatura:bind:repository --model={modelName? : The name of the model you want to bind}';
 
-    protected $description = 'Create provider for binding repositories.';
+    protected $description = 'Binding repositories with interfaces.';
 
     protected $baseStubPath;
 
@@ -48,7 +48,8 @@ class MakeProvider extends Command
                         'variables' => ['interface_name' => $modelName . 'Interface', 'repository_name' => $modelName . 'Repository']
                     ];
                 } else {
-                    $this->error('Provider Already Exists');
+                    $this->info('Binding Repository and Interface for ' . $modelName);
+                    $this->bindRepository((new GenerateStub(__DIR__ . '/../stubs/bind.stub', ['interface_name' => $modelName . 'Interface', 'repository_name' => $modelName . 'Repository']))->generate());
                     return;
                 }
         
