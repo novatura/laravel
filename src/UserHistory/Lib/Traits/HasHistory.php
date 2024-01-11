@@ -29,12 +29,12 @@ trait HasHistory
     public function updateWithHistory(array $data, string $description)
     {
 
-        $oldData = self::prepareData($this->getAttributes(), $model->getHidden());
+        $oldData = self::prepareData($this->getAttributes(), $this->getHidden());
 
         $this->update($data);
 
         $user = Auth::user();
-        $newData = self::prepareData($this->getAttributes(), $model->getHidden());
+        $newData = self::prepareData($this->getAttributes(), $this->getHidden());
 
         History::create([
             'action' => 'Update',
@@ -49,15 +49,20 @@ trait HasHistory
 
     public function deleteWithHistory(string $description)
     {
+
+        $attributes = $this->getAttributes();
+
+        $hidden = $this->getHidden();
+
         $this->delete();
 
         $user = Auth::user();
 
-        $oldData = self::prepareData($model->getAttributes(), $model->getHidden());
+        $oldData = self::prepareData($attributes, $hidden);
 
         History::create([
             'action' => 'Delete',
-            'model' => class_basename($model),
+            'model' => class_basename($this),
             'model_id' => $this->getKey(),
             'old_data' => $oldData,
             'new_data' => null,
