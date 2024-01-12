@@ -1,0 +1,22 @@
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
+    
+    public function hasPermissionId($permissionId)
+    {
+            return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permissionId) {
+                $query->where('permissions.id', $permissionId);
+            })
+            ->exists();
+    }
+
+    public function hasPermissionName($permissionName)
+    {
+        return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permissionName) {
+                $query->where('permissions.name', $permissionName);
+            })
+            ->exists();
+    }

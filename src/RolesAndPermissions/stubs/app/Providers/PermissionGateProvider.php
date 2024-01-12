@@ -38,11 +38,11 @@ class PermissionGateProvider extends ServiceProvider
                         'path' => storage_path("logs/novatura/permission_check.log"),
                     ])->info([
                         'Checking User for Permission',
-                        $user->name,
-                        $user->role->permissions->pluck('name'),
+                        $user->full_name,
+                        // $user->role->permissions->pluck('name'),
                         $permission->name,
                     ]);
-                    return $user->role->permissions->contains('id', $permission->id);
+                    return $user->hasPermissionId($permission->id);
                 });
             });
         } catch (\Exception $e) {

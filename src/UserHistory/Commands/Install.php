@@ -33,7 +33,7 @@ class Install extends Command
 
         $this->info('Binding Repositories...');
         $this->call('novatura:bind:repository', [
-            'modelName' => 'Novatura\\Laravel\\UserHistory\\Lib\\Models\\History' 
+            'modelName' => 'Novatura\\Laravel\\Core\\Models\\History' 
         ]);
 
         $this->addRoutes(['auth'], [

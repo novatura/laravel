@@ -1,6 +1,6 @@
 <?php
 
-namespace Novatura\Laravel\Scaffold\Lib\Traits;
+namespace Novatura\Laravel\Core\Traits;
 
 use Illuminate\Support\Facades\Storage;
 

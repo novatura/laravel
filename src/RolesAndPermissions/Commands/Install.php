@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Novatura\Laravel\Core\Utils\FileUtils;
 use Novatura\Laravel\Core\Utils\PackageUtils;
 use Carbon\Carbon;
+use Novatura\Laravel\Support\GenerateStub;
 
 class Install extends Command
 {
@@ -27,11 +28,20 @@ class Install extends Command
     public function handle()
     {
 
+        $filePath = app_path('Models/User.php');
+        $content = file_get_contents($filePath);
+        
+        $lastBracePosition = strrpos($content, '}');
 
-
-
-
-
+        $replacement_code = (new GenerateStub(__DIR__ . '/../generate_stub/hasPermissions.stub'))->generate();
+        
+        if ($lastBracePosition !== false) {
+            $newContent = substr_replace($content, $replacement_code . "\n\n}", $lastBracePosition, 1);
+            file_put_contents($filePath, $newContent);
+        } else {
+            $this->error("Not Found");
+        }
+                
         /**
          * Copy file structure from ../stubs to project
          */

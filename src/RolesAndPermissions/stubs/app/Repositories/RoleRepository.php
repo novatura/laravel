@@ -20,7 +20,12 @@ class RoleRepository implements RoleInterface
 
     public function deleteRole($roleId)
     {
-        Role::destroy($roleId);
+        $role = Role::findOrFail($roleId);
+        if($role->users->count() === 0){
+            Role::destroy($roleId);
+        } else {
+            throw new Exception('Role has users');
+        }
     }
 
     public function createRole(array $roleDetails)

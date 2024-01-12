@@ -32,7 +32,7 @@ class Role extends Model
 
     public function getUserCountAttribute()
     {
-        return $role->users->count();
+        return $this->users->count();
     }
 
 }
