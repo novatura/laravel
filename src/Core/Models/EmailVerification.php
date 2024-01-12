@@ -1,6 +1,6 @@
 <?php
 
-namespace Novatura\Laravel\Scaffold\Lib\Models;
+namespace Novatura\Laravel\Core\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

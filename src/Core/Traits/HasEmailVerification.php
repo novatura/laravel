@@ -1,11 +1,11 @@
 <?php
 
-namespace Novatura\Laravel\Scaffold\Lib\Traits;
+namespace Novatura\Laravel\Core\Traits;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Notification;
-use Novatura\Laravel\Scaffold\Lib\Notifications\VerifyEmail;
-use Novatura\Laravel\Scaffold\Lib\Models\EmailVerification;
+use Novatura\Laravel\Core\Notifications\VerifyEmail;
+use Novatura\Laravel\Core\Models\EmailVerification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;

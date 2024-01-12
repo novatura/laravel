@@ -1,10 +1,10 @@
 <?php
 
-namespace Novatura\Laravel\UserHistory\Lib\Traits;
+namespace Novatura\Laravel\Core\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
-use Novatura\Laravel\UserHistory\Lib\Models\History;
+use Novatura\Laravel\Core\Models\History;
 
 trait HasHistory
 {

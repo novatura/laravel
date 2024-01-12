@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use Novatura\Laravel\UserHistory\Lib\Models\History;
+use Novatura\Laravel\Core\Models\History;
 use App\Repositories\Interfaces\HistoryInterface;
 
 class HistoryRepository implements HistoryInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Novatura\Laravel\Scaffold\Lib\Notifications;
+namespace Novatura\Laravel\Core\Notifications;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
