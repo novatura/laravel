@@ -34,6 +34,11 @@ class UserRepository implements UserInterface
         return User::whereId($userId)->update($newData);
     }
 
+    public function getUserByIdWithRoles($userId) 
+    {
+        return User::with('roles')->findOrFail($userId);
+    }
+
     public function getAllUsersWithRoles(){
         return User::with('roles')->get();
     }

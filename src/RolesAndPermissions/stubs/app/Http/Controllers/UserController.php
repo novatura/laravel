@@ -38,7 +38,8 @@ class UserController extends Controller
     public function show(Request $request, $id): Response
     {
         return Inertia::render('Users/User', [
-            'user' => $this->userRepository->getUserById($id),
+            'user' => $this->userRepository->getUserByIdWithRoles($id),
+            'roles' => $this->roleRepository->getAllRoles(),
         ]);
     }
 
