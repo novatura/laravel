@@ -51,6 +51,7 @@ export default function useRolesTable(data: RowType[]) {
         mantineSearchTextInputProps: {
             placeholder: 'Search Roles',
         },
+        autoResetPageIndex: false,
         renderTopToolbar: ({ table }) => {
             return (
                 <Flex p="md" justify="space-between" align="center">

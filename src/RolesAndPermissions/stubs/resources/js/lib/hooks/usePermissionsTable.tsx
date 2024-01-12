@@ -36,6 +36,7 @@ export default function usePermissionsTable(data: RowType[], isDirty: boolean) {
         mantineSearchTextInputProps: {
             placeholder: 'Search Permissions',
         },
+        autoResetPageIndex: false,
         renderTopToolbar: ({ table }) => {
             return (
                 <Flex p="md" justify="space-between" align="center">
