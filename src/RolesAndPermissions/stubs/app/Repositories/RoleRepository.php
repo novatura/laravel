@@ -24,7 +24,7 @@ class RoleRepository implements RoleInterface
         if($role->users->count() === 0){
             Role::destroy($roleId);
         } else {
-            throw new Exception('Role has permissions');
+            throw new Exception('Role has users');
         }
     }
 

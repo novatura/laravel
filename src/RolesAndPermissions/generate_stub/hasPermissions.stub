@@ -5,10 +5,18 @@
     
     public function hasPermissionId($permissionId)
     {
-        return $this->role->permissions->contains('id', $permissionId);
+            return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permissionId) {
+                $query->where('permissions.id', $permissionId);
+            })
+            ->exists();
     }
 
     public function hasPermissionName($permissionName)
     {
-        return $this->role->permissions->contains('name', $permissionName);
+        return $this->roles()
+            ->whereHas('permissions', function ($query) use ($permissionName) {
+                $query->where('permissions.name', $permissionName);
+            })
+            ->exists();
     }
