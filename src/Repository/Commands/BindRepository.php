@@ -29,13 +29,10 @@ class BindRepository extends Command
     {
 
         if($this->argument('modelName')){
-            $modelName = $this->argument('modelName');
 
-            $model = sprintf('App\\Models\\' . $modelName);
+            if(class_exists($this->getModelClass())){
 
-            if(class_exists($model)){
-
-                $modelName = ucwords($modelName);
+                $modelName = ucwords($this->getModel());
 
                 $generateFiles = [];
         
@@ -57,6 +54,7 @@ class BindRepository extends Command
 
             } else {
                 $this->error('Model Not Found');
+                $this->info($this->getModelClass());
                 return;
             }
         } else {
@@ -88,6 +86,32 @@ class BindRepository extends Command
 
         return file_exists(app_path('Providers/RepositoryServiceProvider.php'));
 
+    }
+
+    public function getModelClass(){
+        $input = $this->argument('modelName');
+
+        // Check if the input contains a path separator
+        if (str_contains($input, '\\') || str_contains($input, '/')) {
+            // If the input contains a path separator, assume it's the full path to the model
+            return $input;
+        }
+
+        return sprintf('App\\Models\\' . $input);
+        
+    }
+
+    public function getModel(){
+        $input = $this->argument('modelName');
+
+        // Check if the input contains a path separator
+        if (str_contains($input, '\\')) {
+            // If the input contains a path separator, assume it's the full path to the model
+            $parts = explode('\\', $input);
+            return end($parts);
+        }
+
+        return $input;
     }
 
 }
