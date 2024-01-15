@@ -1,0 +1,11 @@
+    public function create($token): Response
+    {
+        if (!$invite = Invite::where('token', $token)->first()) {
+            //if the invite doesn't exist do something more graceful than this
+            abort(404);
+        }
+
+        return Inertia::render('Auth/RegisterToken', [
+            'token' => $token,
+        ]);
+    }
