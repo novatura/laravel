@@ -54,6 +54,12 @@ class Invite extends Command
             __DIR__ . '/../functions/createFunction.stub'
         );
 
+        $this->changeOnPatternReact(
+            resource_path('js/Pages/Auth/Login.tsx'),
+            '/<\/form>(.+)<\/Stack>/s',
+            __DIR__ . '/../Components/login.stub'
+        );
+
         $this->info("Adding Routes...");
         $this->addRoutes(['auth'], [
             "Route::post('/users/invite', [\App\Http\Controllers\Auth\RegistrationInvitationController::class, 'store'])->name('users.invite');",
