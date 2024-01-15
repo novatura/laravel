@@ -1,9 +1,9 @@
 <x-mail::message>
-# You have recieve a ADAS Certificate
+# You have recieved an invitation
 
 Welcome,
 
-You have been invited to join the Storm Auto Services Dashboard,
+You have been invited to join this [Insert Cool Novatura Project].
 
 <x-mail::button :url="route('register', $invite->token)">
     Accept Invite
@@ -11,5 +11,5 @@ You have been invited to join the Storm Auto Services Dashboard,
 
 Kind regards,
 
-Storm Auto Services
+The Novatura Team
 </x-mail::message>
