@@ -4,6 +4,7 @@ namespace Novatura\Laravel\Core\Utils;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Novatura\Laravel\Support\GenerateStub;
 
 /**
  * File utils trait
@@ -161,6 +162,35 @@ trait FileUtils
         // Write the modified content back to the file
         file_put_contents($file, $newFileContent);
 
+    }
+
+    public function changeOnPattern($file, $pattern, $stubFile){
+        $fileContents = file_get_contents($file);
+
+        preg_match($pattern, $fileContents, $matches);
+
+        // Check if the pattern is found
+        if (!empty($matches)) {
+            // Captured function content is in $matches[0]
+            $capturedFunctionContent = $matches[0];
+
+            // Wrap the entire function content in a block comment
+            $commentedFunctionContent = '/*' . "\n\t" . $capturedFunctionContent . "\t" . '*/' . "\n";
+
+            $stub = (new GenerateStub($stubFile))->generate();
+
+            $newCode = $commentedFunctionContent . "\n" . $stub;
+
+            // Replace the original function content with the commented version
+            $fileContents = str_replace($capturedFunctionContent, $newCode, $fileContents);
+
+            // Save the modified content back to the file
+            file_put_contents($file, $fileContents);
+
+            $this->info($file . " Updated");
+        } else {
+            $this->error($file. " Failed to Update");
+        }
     }
 
 }
