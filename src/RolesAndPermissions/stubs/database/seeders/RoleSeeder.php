@@ -17,81 +17,68 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        //This system will create both roles and permissions and attach them all from the rolesData.
-        //Start with the name of the role and all the names of the permissions associated with the role after. 
-        //If you need to update the roles then update the array and run again.
-        //This array allows you to:
-        //  Create Roles
-        //  Create Permissions
-        //  Update what permissions each role has
-        //This array does not allow you to:
-        //  Delete Roles
-        //  Delete Permissions completely, only remove them from a role
-        //  Update the names of existing roles or permissions
 
-        $rolesData = [
-            'user' => [],
+        //Roles that have all permissions
+        $all = [
+            'admin'
         ];
-        
-        // Create roles
-        foreach ($rolesData as $roleName => $rolePermissions) {
-            try {
-                $role = Role::create(['name' => $roleName]);
-            } catch (QueryException $e) {
-                $role = self::handleRoleCreationException($e, $roleName);
-            }
-        
-            // Attach permissions to role
-            foreach ($rolePermissions as $permName) {
-                try {
-                    $permission = self::createOrRetrievePermission($permName);
+
+        //Roles and their permissions
+        $selected = [
+            'user' => []
+        ];
+
+        $permissions = Permission::all();
+
+        foreach($all as $roleName){
+            $role = Role::create([
+                'name' => $roleName
+            ]);
+
+            $role->permissions()->attach($permissions->pluck('id'));
+
+            echo $roleName . ' created with ' . $permissions->count() . "\n";
+        }
+
+        foreach($selected as $roleName => $rolePermissions) {
+            $role = Role::create([
+                'name' => $roleName
+            ]);
+
+            foreach($rolePermissions as $permissionName){
+                if($permission = Permission::where('name', $permissionName)->first()){
                     $role->permissions()->attach($permission->id);
-                } catch (\Exception $e) {
-                    echo 'Error Attaching ' . $permName . ' to ' . $roleName . "\n";
+                } else {
+                    echo $permissionName . " not found\n";
                 }
             }
+
         }
 
-    }
+        // List the roles you want a default user for
+        $default_users = [
+            'admin'
+        ];
 
-    public static function handleRoleCreationException(QueryException $e, $roleName)
-    {
-        if ($e->getCode() == 23000) {
-            echo $roleName . " Already Exists, finding {$roleName} and detaching all current permissions ... \n";
+        foreach ($default_users as $roleName){
             $role = Role::where('name', $roleName)->first();
-    
-            if (!$role) {
-                dd("$roleName Not Found");
-            }
-    
-            $role->permissions()->detach();
-            return $role;
-        } else {
-            dd($e);
-        }
-    }
 
-    public static function createOrRetrievePermission($permName)
-    {
-        try {
-            return Permission::create(['name' => $permName]);
-        } catch (QueryException $e) {
-            if ($e->getCode() == 23000) {
-                echo 'Permission Already Exists: ' . $permName . "\n";
-                $permission = Permission::where('name', $permName)->first();
-    
-                if (!$permission) {
-                    echo 'Permission Not Found: ' . $permName . "\n";
-                    throw new \Exception("Permission Not Found: $permName");
-                }
+            if($role){
+                $user = \App\Models\User::create([
+                    'first_name' => 'Default',
+                    'last_name' => ucwords($roleName),
+                    'email' => $roleName . '@example.com',
+                    'password' => 'password',
+                ]);
 
-                echo 'Attaching: ' . $permName . "\n";
-    
-                return $permission;
+                $user->roles()->attach($role);
+
+                echo 'Default user created for: ' . $roleName . "\n";
             } else {
-                echo 'Database Error with ' . $permName . ': ' . $e->getMessage() . "\n";
-                throw new \Exception("Database Error with $permName: " . $e->getMessage());
+                echo 'Default user not created for: ' . $roleName . ", role not found\n";
             }
         }
+
+
     }
 }
