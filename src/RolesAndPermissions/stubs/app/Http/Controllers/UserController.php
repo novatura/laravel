@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Repositories\Interfaces\UserInterface;
 use App\Repositories\Interfaces\RoleInterface;
+use App\Http\Requests\UpdateUserRolesRequest;
 
 class UserController extends Controller
 {
@@ -67,9 +68,10 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function updateRoles(Request $request, $user_id){
+    public function updateRoles(UpdateUserRolesRequest $request, $user_id){
+
         try {
-            $this->userRepository->updateRoles($user_id, $request->roles);
+            $this->userRepository->updateRoles($user_id, $request->validated());
         } catch (\Exception $e) {
             return redirect()->back()->with([
                 'error' => $e->getMessage()
