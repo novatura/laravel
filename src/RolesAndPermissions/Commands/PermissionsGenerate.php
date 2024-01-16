@@ -24,7 +24,7 @@ class PermissionsGenerate extends Command
         $webFileContent = file_get_contents(base_path('routes/web.php'));
 
         // Define a regular expression to match routes with ->name()
-        $pattern = '/->name\(\'([^\']+)\'\)/';
+        $pattern = '/can:([\w.]+)/';
 
         // Match all occurrences of the pattern
         preg_match_all($pattern, $webFileContent, $matches);

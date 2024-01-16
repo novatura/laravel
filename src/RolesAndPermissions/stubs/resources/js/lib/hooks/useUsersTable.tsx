@@ -42,7 +42,7 @@ export default function useUsersTable(data: UserWithRole[]) {
         enableFacetedValues: false,
         enableGrouping: false,
         enableColumnPinning: false,
-        enableRowActions: true,
+        enableRowActions: false,
         initialState: { showColumnFilters: false, showGlobalFilter: true },
         paginationDisplayMode: 'pages',
         positionToolbarAlertBanner: 'bottom',

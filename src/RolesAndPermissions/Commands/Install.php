@@ -27,20 +27,6 @@ class Install extends Command
 
     public function handle()
     {
-
-        $filePath = app_path('Models/User.php');
-        $content = file_get_contents($filePath);
-        
-        $lastBracePosition = strrpos($content, '}');
-
-        $replacement_code = (new GenerateStub(__DIR__ . '/../generate_stub/hasPermissions.stub'))->generate();
-        
-        if ($lastBracePosition !== false) {
-            $newContent = substr_replace($content, $replacement_code . "\n\n}", $lastBracePosition, 1);
-            file_put_contents($filePath, $newContent);
-        } else {
-            $this->error("Not Found");
-        }
                 
         /**
          * Copy file structure from ../stubs to project
@@ -82,26 +68,24 @@ class Install extends Command
             'modelName' => 'Permission', 
         ]);
 
-        //     ['path' => app_path('providers/PermissionGateProvider.php'), 'stub' => 'permission_provider.stub'],
-        // ];
 
-        // if ($this->option('controllers')) {
-        //     // Only add controllers if the -c option is true
-        //     $generateFiles = array_merge($generateFiles, [
-        //         ['path' => app_path('Http/Controllers/PermissionController.php'), 'stub' => 'permission_controller.stub'],
-        //         ['path' => app_path('Http/Controllers/RoleController.php'), 'stub' => 'role_controller.stub'],
-        //     ]);
-        // }
+        //Editing the user model to add methods
+        $filePath = app_path('Models/User.php');
+        $content = file_get_contents($filePath);
+        
+        $lastBracePosition = strrpos($content, '}');
 
-        // if ($this->option('seeder')) {
-        //     // Only add controllers if the -c option is true
-        //     $generateFiles = array_merge($generateFiles, [
-        //         ['path' => database_path('seeders/RoleSeeder.php'), 'stub' => 'role_seeder.stub'],
-        //     ]);
-        // }
+        $replacement_code = (new GenerateStub(__DIR__ . '/../generate_stub/hasPermissions.stub'))->generate();
+        
+        if ($lastBracePosition !== false) {
+            $newContent = substr_replace($content, $replacement_code . "\n\n}", $lastBracePosition, 1);
+            file_put_contents($filePath, $newContent);
+        } else {
+            $this->error("Not Found");
+        }
 
         // (new MakeFile($this, $generateFiles))->generate();
-        $this->comment("\nTo complete the setup:\n - Migrate the new database files\n - Add the roles relationship to the user model\n - Include the PermissionGateProvider in the app config file");
+        $this->comment("\nTo complete the setup:\n - artisan migrate\n - artisan novatura:permissions:generate");
     }
 
     protected function getCurrentTimestamp(): Carbon
