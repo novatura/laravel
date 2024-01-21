@@ -9,6 +9,8 @@ class LogIn extends Model
 {
     use HasFactory;
 
+    protected $encrypt = ['ip'];
+
     protected $fillable = [
         'browser',
         'ip',
