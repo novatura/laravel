@@ -1,0 +1,8 @@
+class RegisteredUserController extends Controller
+{
+
+    private $inviteRepository;
+    public function __construct(App\Repositories\Interfaces\InviteInterface $inviteRepository)
+    {
+        $this->inviteRepository = $inviteRepository;
+    }

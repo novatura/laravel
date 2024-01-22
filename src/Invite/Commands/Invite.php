@@ -11,7 +11,7 @@ class Invite extends Command
 {
     use FileUtils;
 
-    protected $signature = 'novatura:invite:install';
+    protected $signature = 'novatura:invite:install {--r|roles : Create invite with Roles}';
     protected $description = 'Use invitations for registration';
 
     public function handle()
@@ -21,7 +21,11 @@ class Invite extends Command
          * Copy file structure from ../stubs to project
          */
         $this->info("Copying new files...");
-        File::copyDirectory(__DIR__ . '/../stubs', base_path());
+        if($this->option('roles')){
+            File::copyDirectory(__DIR__ . '/../stubs/roles', base_path());
+        } else {
+            File::copyDirectory(__DIR__ . '/../stubs/standard', base_path());
+        }
 
         $this->info("Changing existing files...");
         $this->changeOnPattern(
@@ -40,6 +44,12 @@ class Invite extends Command
             app_path('Http/Requests/Auth/RegisterRequest.php'), 
             '/return\s+\[(.+)\];/s', 
             __DIR__ . '/../functions/registerRequestRule.stub'
+        );
+
+        $this->changeOnPattern(
+            app_path('Http/Controllers/Auth/RegisteredUserController.php'), 
+            '/class\s+RegisteredUserController\s+extends\s+Controller\s*\{/', 
+            __DIR__ . '/../functions/classConstructor.stub'
         );
 
         $this->changeOnPattern(

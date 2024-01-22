@@ -1,15 +1,7 @@
     public function store(RegisterRequest $request, $token): RedirectResponse
     {
-        $values = $request->validated();
 
-        $invite = Invite::where('token', $token)->first();
-
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $invite->email,
-            'password' => $request->password,
-        ]);
+        $user = $this->inviteRepository->createUserFromInvite($request->validated(), $token);
 
         event(new Registered($user));
 
