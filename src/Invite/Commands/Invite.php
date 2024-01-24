@@ -23,6 +23,7 @@ class Invite extends Command
         $this->info("Copying new files...");
         if($this->option('roles')){
             File::copyDirectory(__DIR__ . '/../stubs/roles', base_path());
+            $this->installMiddlewareAfter('SubstituteBindings::class', '\App\Http\Middleware\AppendInviteContext::class');
         } else {
             File::copyDirectory(__DIR__ . '/../stubs/standard', base_path());
         }
@@ -73,6 +74,11 @@ class Invite extends Command
         $this->info("Adding Routes...");
         $this->addRoutes(['auth'], [
             "Route::post('/users/invite', [\App\Http\Controllers\Auth\RegistrationInvitationController::class, 'store'])->name('users.invite');",
+        ]);
+
+        $this->info("Binding Repository");
+        $this->call('novatura:bind:repository', [
+            'modelName' => 'Invite', 
         ]);
 
     }

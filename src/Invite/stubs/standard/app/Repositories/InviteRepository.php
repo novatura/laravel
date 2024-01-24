@@ -6,7 +6,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\Project;
 use App\Repositories\Interfaces\InviteInterface;
-use App\Mail\SendInviteMailable;
+use App\Mail\InviteCreated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 

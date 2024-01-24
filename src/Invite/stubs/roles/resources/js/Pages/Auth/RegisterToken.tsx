@@ -81,4 +81,4 @@ function RegisterTokenPage({token} : {token: string}) {
     );
 }
 
-export default LoginPage;
+export default RegisterTokenPage;

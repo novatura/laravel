@@ -7,12 +7,14 @@ import { PageProps } from "@/types/PageProps";
 import { Role } from "@/types/Role";
 
 function InviteUser({
-    rolesEnabled = false,
+    enableRoles,
     defaultRoles = [],
   }: {
-    rolesEnabled?: boolean;
+    enableRoles?: boolean;
     defaultRoles?: Role[];
   }) {
+
+    const rolesEnabled = enableRoles || false;
 
     const [opened, { open, close }] = useDisclosure();
 

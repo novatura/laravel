@@ -6,14 +6,26 @@ import { useDisclosure } from "@mantine/hooks";
 import { PageProps } from "@/types/PageProps";
 import { Role } from "@/types/Role";
 
-function InviteUser() {
+function InviteUser({
+    enableRoles,
+    defaultRoles = [],
+  }: {
+    enableRoles?: boolean;
+    defaultRoles?: Role[];
+  }) {
+
+    const rolesEnabled = enableRoles || false;
 
     const [opened, { open, close }] = useDisclosure();
+
+    const { roles } = usePage<PageProps<{ roles: Role[]}>>().props
     
     const { post, data, setData, processing, errors, reset } = useForm<{
         email: string,
+        roles: string[]
     }>({
         email: "",
+        roles: defaultRoles.map(function (role) {return role.id.toString()}),
     })
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -37,6 +49,12 @@ function InviteUser() {
         });
     }
 
+    const rolesData = roles.map(function (role) {
+        return {
+            label: role.name,
+            value: role.id.toString()
+        }
+    })
 
     return (
         <>
@@ -51,6 +69,14 @@ function InviteUser() {
                             error={errors.email}
                             required 
                         />
+                        { rolesEnabled &&
+                            <MultiSelect
+                                label="Roles"
+                                value={data.roles}
+                                onChange={(e) => setData('roles', e)}
+                                data={rolesData}
+                            />
+                        }
                         <Button mt="lg" type="submit" loading={processing}>
                             Confirm
                         </Button>

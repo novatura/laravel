@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
@@ -9,7 +9,7 @@ use App\Models\Project;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class InviteUserRequest extends FormRequest
+class InvitationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

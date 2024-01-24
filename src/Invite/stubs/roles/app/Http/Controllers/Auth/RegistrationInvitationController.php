@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\InvitationRequest;
 use App\Models\Invite;
+use App\Repositories\Interfaces\InviteInterface;
 
 class RegistrationInvitationController extends Controller
 {

@@ -6,7 +6,7 @@ use App\Models\Invite;
 use App\Models\User;
 use App\Models\Project;
 use App\Repositories\Interfaces\InviteInterface;
-use App\Mail\SendInviteMailable;
+use App\Mail\InviteCreated;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -44,7 +44,7 @@ class InviteRepository implements InviteInterface
 
         $invite->roles()->attach($roleIds);
 
-        Mail::to($data['email'])->send(new SendInviteMailable($invite));
+        Mail::to($data['email'])->send(new InviteCreated($invite));
         
     }
 
@@ -62,17 +62,6 @@ class InviteRepository implements InviteInterface
         $roles = $invite->roles->pluck('id');
 
         $user->roles()->attach($roles);
-
-        if($invite->project_id !== null){
-            $project = Project::find($invite->project_id);
-
-            if($invite->owner && $project->owner != null){
-                $project->owner == $user->id;
-                $project->save();
-            } else {
-                $project->users()->attach($user);
-            }
-        }
 
         $invite->delete();
 
