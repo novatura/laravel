@@ -163,4 +163,31 @@ trait FileUtils
 
     }
 
+    /**
+     * Extract types from a file
+     * 
+     * @param string $file The file to extract types from
+     * 
+     * @return array<int, array<int, string>>
+     */
+    function extractTypes(string $file): array
+    {
+        $contents = file_get_contents($file);
+
+         // Remove comments
+        $contents = preg_replace('/\/\/.*$/m', '', $contents);
+
+        preg_match_all('/(\w+)\s*:\s*([^\n,]+)(?=\s*(\/\/[^\n]*)?(,|\n|\}))/m', $contents, $matches);
+
+        $matches = array_map(function ($match) {
+            $pair = explode(':', $match);
+            return [
+                'name' => trim($pair[0]),
+                'type' => trim($pair[1]),
+            ];
+        }, $matches[0]);
+
+        return $matches;
+    }
+
 }

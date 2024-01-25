@@ -1,0 +1,22 @@
+
+import { {{name}} } from "@/types/{{name}}"
+import { useMemo } from "react";
+import { MRT_ColumnDef, MantineReactTable, useMantineReactTable } from "mantine-react-table"
+
+function {{name}}Table({ data }: { data: {{name}}[] }) {
+
+    const columns = useMemo<MRT_ColumnDef<{{name}}>[]>(() => [
+{{ fields }}
+    ], []);
+
+    const table = useMantineReactTable({
+        data,
+        columns
+    })
+
+    return (
+        <MantineReactTable table={table} />
+    );
+}
+
+export default {{name}}Table;
