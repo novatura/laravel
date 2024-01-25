@@ -18,7 +18,9 @@
     },
     "require": {
         "laravel/framework": "^10.38",
-        "inertiajs/inertia-laravel": "^0.6.11"
+        "inertiajs/inertia-laravel": "^0.6.11",
+        "browscap/browscap": "^6.1",
+        "jenssegers/agent": "^2.6"
     },
     "extra": {
         "laravel": {
