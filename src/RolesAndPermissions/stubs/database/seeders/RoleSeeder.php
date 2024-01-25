@@ -20,7 +20,21 @@ class RoleSeeder extends Seeder
 
         //Roles that have all permissions
         $all = [
-            'admin'
+            'developer'
+        ];
+
+        $all_but = [
+            'admin' => [
+                'assign.developer',
+                'remove.developer',
+                'roles.index',
+                'roles.show',
+                'roles.store',
+                'roles.update',
+                'roles.destroy',
+                'roles.update.permission',
+                'roles.add.users',
+            ]
         ];
 
         //Roles and their permissions
@@ -31,6 +45,19 @@ class RoleSeeder extends Seeder
         $permissions = Permission::all();
 
         foreach($all as $roleName){
+            $role = Role::create([
+                'name' => $roleName
+            ]);
+
+            $role->permissions()->attach($permissions->pluck('id'));
+
+            echo $roleName . ' created with ' . $permissions->count() . "\n";
+        }
+
+        foreach($all_but as $roleName => $excludePermissionNames){
+
+            $permissions = Permission::whereNotIn('name', $excludePermissionNames)->get();
+
             $role = Role::create([
                 'name' => $roleName
             ]);
@@ -57,6 +84,7 @@ class RoleSeeder extends Seeder
 
         // List the roles you want a default user for
         $default_users = [
+            'developer',
             'admin'
         ];
 

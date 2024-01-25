@@ -24,7 +24,8 @@ class PermissionSeeder extends Seeder
         // If you are using this for route permissions (can:index.users), 
         // instead add the gate to the route and run novatura:permissions:generate
         $permissions = [
-
+            'assign.developer',
+            'remove.developer',
         ];
 
 

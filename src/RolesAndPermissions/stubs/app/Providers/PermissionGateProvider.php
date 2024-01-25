@@ -27,29 +27,12 @@ class PermissionGateProvider extends ServiceProvider
 
         try {
             $permissions = Permission::all()->map(function ($permission) {
-                Log::build([
-                    'driver' => 'single',
-                    'path' => storage_path("logs/novatura/permission_gates.log"),
-                ])->info('Creating gate: ' . $permission->name);
     
                 Gate::define($permission->name, function(User $user) use ($permission) {
-                    Log::build([
-                        'driver' => 'single',
-                        'path' => storage_path("logs/novatura/permission_check.log"),
-                    ])->info([
-                        'Checking User for Permission',
-                        $user->full_name,
-                        // $user->role->permissions->pluck('name'),
-                        $permission->name,
-                    ]);
                     return $user->hasPermissionId($permission->id);
                 });
             });
         } catch (\Exception $e) {
-            Log::build([
-                'driver' => 'single',
-                'path' => storage_path("logs/novatura/gate_error.log"),
-            ])->info($e->getMessage());
         }
     }
 }

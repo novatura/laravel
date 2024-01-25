@@ -2,6 +2,11 @@
     {
         return $this->belongsToMany(Role::class, 'user_roles');
     }
+
+    public function hasRole($roleId)
+    {
+        return $this->roles()->where('roles.id', $roleId)->exists();
+    }
     
     public function hasPermissionId($permissionId)
     {
