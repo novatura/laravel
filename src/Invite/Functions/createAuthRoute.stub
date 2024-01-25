@@ -1,0 +1,1 @@
+Route::get('register/{token}', [RegisteredUserController::class, 'create'])->name("register");

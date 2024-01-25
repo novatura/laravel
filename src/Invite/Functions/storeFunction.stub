@@ -1,0 +1,11 @@
+    public function store(RegisterRequest $request, $token): RedirectResponse
+    {
+
+        $user = $this->inviteRepository->createUserFromInvite($request->validated(), $token);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+
+        return redirect(RouteServiceProvider::HOME);
+    }

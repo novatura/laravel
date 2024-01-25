@@ -1,0 +1,8 @@
+    public function create($token): Response
+    {
+        $invite = $this->inviteRepository->getInviteFromToken($token);
+
+        return Inertia::render('Auth/RegisterToken', [
+            'token' => $token,
+        ]);
+    }

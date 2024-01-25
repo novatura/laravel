@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Novatura\Laravel\Core\Traits\HasEmailVerification;
 use Novatura\Laravel\Core\Traits\HasFile;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -58,6 +59,20 @@ class User extends Authenticatable
      */
     protected $appends = ['full_name', 'two_factor_enabled'];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::updating(function ($user) {
+            // Check if the password is being updated
+            if ($user->isDirty('password')) {
+                $currentPassword = $user->getOriginal('password');
+                
+                // Perform the logout on other devices
+                Auth::logoutOtherDevices($currentPassword);
+            }
+        });
+    }
 
     /**
      * The method gets the full name of the user.

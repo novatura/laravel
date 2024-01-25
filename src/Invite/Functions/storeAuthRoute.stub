@@ -1,0 +1,1 @@
+Route::post('register/{token}', [RegisteredUserController::class, 'store'])->name("register.store");
