@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Reminders;
+
+use {{ base_class_path }};
+use Illuminate\Notifications\Notification;
+use Illuminate\Mail\Mailable;
+use App\Models\User;
+
+class {{ class_name }} extends {{ base_class_name }}
+{
+    public function __construct(User $user)
+    {
+        parent::__construct($user);
+    }
+
+
+    /**
+     * Authorize whether the reminder should be sent or not.
+     * Use ids to get the fetch data after delays.
+     *
+     * @return bool to authorize the reminder after the delay.
+     */
+    public function shouldDispatch(): bool
+    {
+        return true;
+    }
+
+
+    /**
+     * 
+     * Prepare the notification for sending.
+     *
+     * @return Notification that will be sent to the user.
+     */
+    // public function getNotification(): Notification
+    // {
+        
+    // }
+
+
+    /**
+     * 
+     * Prepare the mailable for sending.
+     *
+     * @return Mailable that will be sent to the user.
+     */
+    // public function getMailable(): Mailable
+    // {
+
+    // }
+
+}
