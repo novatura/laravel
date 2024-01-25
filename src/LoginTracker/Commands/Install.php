@@ -1,6 +1,6 @@
 <?php
 
-namespace Novatura\Laravel\ModelLogging\Commands;
+namespace Novatura\Laravel\LoginTracker\Commands;
 
 use Illuminate\Console\Command;
 use Novatura\Laravel\Support\MakeFile;
