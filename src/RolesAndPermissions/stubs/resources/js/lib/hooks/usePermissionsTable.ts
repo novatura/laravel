@@ -1,4 +1,6 @@
+import PermissionsTableTopToolbar from "@/components/permissions/PermissionsTableTopToolbar";
 import PermissionsToggle from "@/components/permissions/PermissionsToggle";
+import PermissionsToggleCell from "@/components/permissions/cells/PermissionsToggleCell";
 import { Permission } from "@/types/Permissions";
 import { Alert, Flex } from "@mantine/core";
 import { AlertCircleIcon } from "lucide-react";
@@ -13,7 +15,7 @@ export default function usePermissionsTable(data: RowType[], isDirty: boolean) {
         {
             accessorKey: "isGranted",
             header: "",
-            Cell: ({ cell }) => createElement(PermissionsToggle, { ...cell.row.original })
+            Cell: PermissionsToggleCell
         },
         {
             accessorKey: "name",
@@ -37,22 +39,6 @@ export default function usePermissionsTable(data: RowType[], isDirty: boolean) {
             placeholder: 'Search Permissions',
         },
         autoResetPageIndex: false,
-        renderTopToolbar: ({ table }) => {
-            return (
-                <Flex p="md" justify="space-between" align="center">
-                    <Flex gap="xs">
-                        <MRT_GlobalFilterTextInput table={table} />
-                        <MRT_ToggleFiltersButton table={table} />
-                    </Flex>
-                    <Alert
-                        color="yellow"
-                        mb="md"
-                        icon={<AlertCircleIcon />}
-                        title="Save Changes"
-                        style={{ opacity: isDirty ? 1 : 0, transition: 'opacity 0.1s ease-in-out' }}
-                    />
-                </Flex>
-            );
-        },
+        renderTopToolbar: PermissionsTableTopToolbar(isDirty),
     } as ComponentProps<typeof MantineReactTable>
 }

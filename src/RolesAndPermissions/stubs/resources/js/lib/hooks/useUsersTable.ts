@@ -2,9 +2,9 @@ import UserActions from "@/components/users/UserActions";
 import UsersRoles from "@/components/users/UsersRoles";
 import { Role } from "@/types/Role";
 import { User } from "@/types/User";
-import { Flex } from "@mantine/core";
-import { MRT_ColumnDef, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton, MantineReactTable } from "mantine-react-table";
+import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
 import { ComponentProps, createElement, useMemo } from "react";
+import { default as renderTopToolbar } from "@/components/users/UsersTableTopToolbar"
 
 type UserWithRole = User & { roles: Role[] }
 
@@ -50,15 +50,6 @@ export default function useUsersTable(data: UserWithRole[]) {
             placeholder: 'Search Roles',
         },
         autoResetPageIndex: false,
-        renderTopToolbar: ({ table }) => {
-            return (
-                <Flex p="md" justify="space-between" align="center">
-                    <Flex gap="xs">
-                        <MRT_GlobalFilterTextInput table={table} />
-                        <MRT_ToggleFiltersButton table={table} />
-                    </Flex>
-                </Flex>
-            );
-        },
+        renderTopToolbar
     } as ComponentProps<typeof MantineReactTable>
 }

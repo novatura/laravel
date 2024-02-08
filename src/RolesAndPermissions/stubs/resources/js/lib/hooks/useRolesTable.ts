@@ -1,10 +1,9 @@
-import AddRole from "@/components/roles/AddRole";
-import RoleBadge from "@/components/roles/RoleBadge";
-import RoleNavigation from "@/components/roles/RoleNavigation";
 import { Role } from "@/types/Role";
-import { Flex } from "@mantine/core";
-import { MRT_ColumnDef, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton, MantineReactTable } from "mantine-react-table";
-import { createElement, useMemo, ComponentProps } from "react";
+import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
+import { useMemo, ComponentProps } from "react";
+import { default as renderTopToolbar } from "@/components/roles/RolesTableTopToolbar";
+import RoleBadgeCell from "@/components/roles/cells/RoleBadgeCell";
+import RoleNavigationCell from "@/components/roles/cells/RoleNavigationCell";
 
 type RowType = Role & { members: number }
 
@@ -14,7 +13,7 @@ export default function useRolesTable(data: RowType[]) {
         {
             accessorKey: "name",
             header: "Name",
-            Cell: ({ cell }) => createElement(RoleBadge, { ...cell.row.original, size: "lg" }, cell.row.original.name)
+            Cell: RoleBadgeCell
         },
         {
             accessorKey: "user_count",
@@ -27,7 +26,7 @@ export default function useRolesTable(data: RowType[]) {
         {
             accessorKey: "id",
             header: "",
-            Cell: ({ cell }) => createElement(RoleNavigation, { id: cell.row.original.id }, cell.row.original.id)
+            Cell: RoleNavigationCell
         }
     ], [data])
 
@@ -52,16 +51,6 @@ export default function useRolesTable(data: RowType[]) {
             placeholder: 'Search Roles',
         },
         autoResetPageIndex: false,
-        renderTopToolbar: ({ table }) => {
-            return (
-                <Flex p="md" justify="space-between" align="center">
-                    <Flex gap="xs">
-                        <MRT_GlobalFilterTextInput table={table} />
-                        <MRT_ToggleFiltersButton table={table} />
-                    </Flex>
-                    <AddRole />
-                </Flex>
-            );
-        },
+        renderTopToolbar
     } as ComponentProps<typeof MantineReactTable>
 }
