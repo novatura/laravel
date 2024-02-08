@@ -1,10 +1,10 @@
-import UserActions from "@/components/users/UserActions";
-import UsersRoles from "@/components/users/UsersRoles";
 import { Role } from "@/types/Role";
 import { User } from "@/types/User";
 import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
-import { ComponentProps, createElement, useMemo } from "react";
-import { default as renderTopToolbar } from "@/components/users/UsersTableTopToolbar"
+import { ComponentProps, useMemo } from "react";
+import { default as renderTopToolbar } from "@/components/users/UsersTableTopToolbar";
+import UserActionsCell from "@/components/users/cells/UserActionsCell";
+import UserRolesCell from "@/components/users/cells/UserRolesCell";
 
 type UserWithRole = User & { roles: Role[] }
 
@@ -22,11 +22,11 @@ export default function useUsersTable(data: UserWithRole[]) {
         },
         {
             header: "Roles",
-            Cell: ({ cell }) => createElement(UsersRoles, cell.row.original.roles)
+            Cell: UserRolesCell
         },
         {
             header: "Actions",
-            Cell: ({ cell }) => createElement(UserActions, cell.row.original)
+            Cell: UserActionsCell
         }
     ], [data])
 
