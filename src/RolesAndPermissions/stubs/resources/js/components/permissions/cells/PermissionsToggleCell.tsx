@@ -1,11 +1,9 @@
 import PermissionsToggle from "@/components/permissions/PermissionsToggle";
+import CustomCell from "@/lib/CustomCell";
 import { Permission } from "@/types/Permissions";
-import { UnwrapCell as U } from "@/types/UnwrapCell";
 
-function PermissionsToggleCell<T extends Permission & { isGranted: boolean }>({ row: { original }}: Parameters<U<T>>[0]): ReturnType<U<T>> {
-    return (
-        <PermissionsToggle {...original} />
-    );
-}
+const PermissionsToggleCell = CustomCell<Permission & { isGranted: boolean }>(({ row: { original }}) => (
+    <PermissionsToggle {...original} />
+))
 
 export default PermissionsToggleCell;

@@ -1,16 +1,14 @@
 import UserNavigation from "../../users/UserNavigation";
 import RemoveUser from "../RemoveUser";
 import { Group } from "@mantine/core";
-import { UnwrapCell as U } from "@/types/UnwrapCell";
 import { User } from "@/types/User";
+import CustomCell from "@/lib/CustomCell";
 
-function UserRoleActionsCell<T extends User>({ row: { original: { id }} }: Parameters<U<T>>[0]) {
-    return (
-        <Group>
-            <UserNavigation id={id} />
-            <RemoveUser id={id} />
-        </Group>
-    );
-}
+const UserRoleActionsCell = CustomCell<User>(({ row: { original: { id }}}) => (
+    <Group>
+        <UserNavigation id={id} />
+        <RemoveUser id={id} />
+    </Group>
+))
 
 export default UserRoleActionsCell;

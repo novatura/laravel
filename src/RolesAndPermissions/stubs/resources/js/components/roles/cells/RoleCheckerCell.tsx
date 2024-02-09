@@ -1,11 +1,10 @@
 import { Switch } from '@mantine/core';
 import { Role } from '@/types/Role';
-import { ReactNode, useContext } from 'react';
+import { useContext } from 'react';
 import { RoleContext } from '../../users/EditUserRoles';
-import { MRT_ColumnDef, MRT_RowData } from 'mantine-react-table';
-import { UnwrapCell as U } from '@/types/UnwrapCell';
+import CustomCell from '@/lib/CustomCell';
 
-function RoleChecker<T extends Role & { isGranted: boolean }>({ row: { original: { id, isGranted } }}: Parameters<U<T>>[0]): ReturnType<U<T>> {
+const RoleCheckerCell = CustomCell<Role & { isGranted: boolean }>(({ row: { original: { id, isGranted } }}) => {
     const { toggle } = useContext(RoleContext);
 
     return (
@@ -15,6 +14,6 @@ function RoleChecker<T extends Role & { isGranted: boolean }>({ row: { original:
             color='green'
         />
     );
-}
+})
 
-export default RoleChecker;
+export default RoleCheckerCell;

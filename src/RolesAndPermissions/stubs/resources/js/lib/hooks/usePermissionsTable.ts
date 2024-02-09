@@ -1,11 +1,8 @@
 import PermissionsTableTopToolbar from "@/components/permissions/PermissionsTableTopToolbar";
-import PermissionsToggle from "@/components/permissions/PermissionsToggle";
 import PermissionsToggleCell from "@/components/permissions/cells/PermissionsToggleCell";
 import { Permission } from "@/types/Permissions";
-import { Alert, Flex } from "@mantine/core";
-import { AlertCircleIcon } from "lucide-react";
-import { MRT_ColumnDef, MRT_GlobalFilterTextInput, MRT_ToggleFiltersButton, MantineReactTable } from "mantine-react-table";
-import { ComponentProps, createElement, useMemo } from "react";
+import { MRT_ColumnDef, MantineReactTable } from "mantine-react-table";
+import { ComponentProps, useMemo } from "react";
 
 type RowType = Permission & { isGranted: boolean }
 
