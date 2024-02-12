@@ -58,7 +58,7 @@ class InstallCommand extends Command
                 '@mantine/hooks' => '^7.3.2',
                 '@mantine/nprogress' => '^7.3.2',
                 '@mantine/notifications' => '^7.4.0',
-                'lucide-react' => '^0.307.0',
+                'lucide-react' => '^0.325.0',
             ] + $packages;
         }, false);
         $this->updateNodePackages(function ($packages) {
